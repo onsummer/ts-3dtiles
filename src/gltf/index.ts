@@ -1,0 +1,1 @@
+export { GLTFDocument } from './core'

@@ -1,0 +1,1 @@
+export { default as GLTFDocument } from './gltf-document'
