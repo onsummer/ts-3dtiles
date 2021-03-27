@@ -1,1 +1,3 @@
-export { GLTFDocument } from './core'
+export * from './core'
+export * from './ext'
+export * from './io'

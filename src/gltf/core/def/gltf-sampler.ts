@@ -9,7 +9,7 @@ class GLTFSampler implements IValidate {
   wrapS?: GLTFWrapMode
   wrapT?: GLTFWrapMode
   name?: string
-  extensions?: Map<string, GLTFExtensionBase>
+  extensions: Set<GLTFExtensionBase> = new Set()
 
   validate = () => true
 }

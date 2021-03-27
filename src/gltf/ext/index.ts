@@ -1,0 +1,1 @@
+export { default as GLTFExtensionBase } from './gltf-extension-base'

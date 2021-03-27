@@ -1,16 +1,23 @@
+import IValidate from "../../../typings/IValidate"
+import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPrimitiveMode from "./enum/gltf-primitivemode"
 import GLTFPrimitiveAttribute from "./gltf-primitive-attribute"
 
-class GLTFPrimitive {
+class GLTFPrimitive implements IValidate {
   attribute: GLTFPrimitiveAttribute
   indices?: number
-  private _material: number | undefined
+  material?: number
+  mode?: GLTFPrimitiveMode
+  extensions: Set<GLTFExtensionBase> = new Set()
+  
   constructor(options: {
     attribute: {
       position: number,
       [propName: string]: any
     },
     indices?: number,
-    material?: number
+    material?: number,
+    mode?: GLTFPrimitiveMode
   }) {
     this.attribute = new GLTFPrimitiveAttribute({
       position: options.attribute.position,
@@ -19,18 +26,22 @@ class GLTFPrimitive {
     })
     this.indices = options.indices
     this.material = options.material
+    if (options.mode! !== GLTFPrimitiveMode.TRIANGLES) {
+      this.mode = options.mode
+    }
   }
 
-  get material() {
-    return this._material
-  } 
-  set material(value: number | undefined) {
-    if (value! < 0) {
-      throw new Error('material index must greater than 0.')
+  validate() {
+    if (this.attribute.validate() === false) {
+      return false
     }
-    else {
-      this._material = value
+    if (this.indices! < 0) {
+      return false
     }
+    if (this.material! < 0) {
+      return false
+    }
+    return true
   }
 }
 

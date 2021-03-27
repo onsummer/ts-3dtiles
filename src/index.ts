@@ -1,1 +1,2 @@
-export { GLTFDocument } from './gltf'
+export * from './gltf'
+export * from './typings'
