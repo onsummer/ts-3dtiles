@@ -1,5 +1,3 @@
-import GLTFPrimitive from "./gltf-primitive";
-
 class GLTFPrimitiveAttribute {
   position: number
   st1?: number

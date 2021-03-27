@@ -1,8 +1,10 @@
 {
-  "scripts": {
-    "build": "tsc ./src/index.ts"
-  },
+  "author": "onsummer",
+  "repository": "onsummer/ts-3dtiles",
+  "version": "0.0.0",
+  "license": "MIT",
   "devDependencies": {
+    "prettier": "^2.2.1",
     "typescript": "^4.2.3"
   }
 }
