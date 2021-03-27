@@ -1,9 +1,13 @@
 import IValidate from "../../typings/IValidate"
 
 class GLTFExtensionBase implements IValidate {
-  readonly name: string = "gltf_extbase"
+  get isRequire() {
+    return false
+  }
 
-  validate = () => true
+  validate() {
+    return true
+  }
 }
 
 export default GLTFExtensionBase
