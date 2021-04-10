@@ -1,10 +1,19 @@
 import ITilesetConstructionParam from "../../../typings/tileset/ITilesetConstructionParam"
+import TilesetExtBase from "../../ext/ext-base"
+import Asset from "./asset"
+import Property from "./property"
 import Tile from "./tile"
 
 class Tileset {
+  asset: Asset
   root: Tile
   geometricError: number
   uri: string
+  extensions?: Set<TilesetExtBase> = new Set()
+  extras?: any
+  extensionsUsed?: string[] = []
+  extensionsRequired?: string[] = []
+  properties?: Map<any, Property>
 
   constructor(options: ITilesetConstructionParam) {
     this.root = options.root
