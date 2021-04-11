@@ -10,10 +10,14 @@ class ExtDraco extends GLTFExtensionBase {
     return true
   }
 
-  // constructor(options: IExtDracoConstructionParam) {
-  //   this.bufferView = options.bufferView
-  //   this.attributes = options.attributes
-  // }
+  constructor(options: {
+    bufferView: number,
+    attributes: GLTFPrimitiveAttribute
+  }) {
+    super()
+    this.bufferView = options.bufferView
+    this.attributes = options.attributes
+  }
 
   validate() {
     return Number.isInteger(this.bufferView)

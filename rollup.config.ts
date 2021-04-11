@@ -4,7 +4,7 @@ import { uglify } from "rollup-plugin-uglify"
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 
-export default {
+const rollupConfig = {
   input: './src/index.ts',
   onwarn: function (warning) {
     if (warning.code === 'THIS_IS_UNDEFINED') {
@@ -12,19 +12,22 @@ export default {
     }
     console.error(warning.message);
   },
+  /** plugins 必须有顺序的使用 */
   plugins: [
+    // 使得 rollup 支持 commonjs 规范，识别 commonjs 规范的依赖
+    commonjs(),
+    resolve({ preferBuiltins: false, mainFields: ['browser'] }),
+
     ts({
       useTsconfigDeclarationDir: true
     }),
     sourceMaps(),
     uglify(),
-    resolve({ preferBuiltins: false, mainFields: ['browser'] }),
-    commonjs()
   ],
   output: [
     {
       format: "cjs",
-      file: "dist/ts-3dtiles.cjs.js",
+      file: "dist/ts-3dtiles.common.js",
       sourcemap: true
     },
     {
@@ -40,3 +43,5 @@ export default {
     }
   ]
 }
+
+export default rollupConfig
