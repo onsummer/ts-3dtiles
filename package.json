@@ -3,8 +3,18 @@
   "repository": "onsummer/ts-3dtiles",
   "version": "0.0.0",
   "license": "MIT",
+  "scripts": {
+    "build": "rollup -c"
+  },
   "devDependencies": {
     "prettier": "^2.2.1",
+    "rollup": "^2.45.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "tslib": "^2.2.0",
     "typescript": "^4.2.3"
   },
   "dependencies": {

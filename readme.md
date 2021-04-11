@@ -10,6 +10,38 @@
 
 在未来，或许提供插件机制，支持创建 gltf、3dtiles
 
+# 使用
+
+在浏览器端有两种用法，一种是使用浏览器已经支持的 esm 方式加载：
+
+``` html
+<script type="module">
+  import * as SDK from './ts-3dtiles.esm.js'
+  // or
+  // import { GLTFDocument, Tileset } from './ts-3dtiles.esm.js'
+</script>
+```
+
+另一种是传统的方式。
+
+``` html
+<script src="./ts-3dtiles.umd.js"></script>
+```
+
+输出全局对象 `ts3dtiles` 即可使用。(如果你不喜欢这个变量名，可以自己替换一个全局变量名，`const you_like = ts3dtiles;`)
+
+``` 
+> ts3dtils
+
+> {Asset: ƒ, B3dm: ƒ, B3dmHeader: ƒ, BatchTable: ƒ, Cmpt: ƒ, …}
+  Asset: class
+  B3dm: class
+  B3dmHeader: class v
+  BatchTable: class x
+  Cmpt: class
+  ...
+```
+
 # 文档
 
 // TODO ：jsDoc配置
@@ -23,7 +55,6 @@
 - `tileset` 读取层级 BatchTable 的能力
 - `gltf` 支持 draco 读取，使用 wasm 库
 - `tileset` 接入 3dtiles-next 扩展特性
-- `bundle` 打包到 dist，供 commonjs 使用或浏览器端使用
 
 # 所用到的第三方库
 
@@ -31,3 +62,5 @@
 - @valeera/mathx：线性代数基础运算
 - gl-matrix：线性代数基础运算
 - uri-js：操作URI
+
+- rollup：打包用

@@ -14,6 +14,7 @@ class GLTFWriteAction {
   }
 
   write(resultPath: string) {
+    console.log(resultPath)
     return this.doc
   }
 }
