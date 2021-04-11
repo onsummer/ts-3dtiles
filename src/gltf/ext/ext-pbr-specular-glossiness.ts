@@ -2,7 +2,8 @@ import GLTFTextureInfo from "../core/def/gltf-texture-info";
 import GLTFExtensionBase from "./gltf-extension-base";
 
 class ExtPbrSpecularGlossiness extends GLTFExtensionBase {
-  readonly name = "KHR_materials_pbrSpecularGlossiness"
+  _name: string = "KHR_materials_pbrSpecularGlossiness"
+
   diffuseFactor?: number[]
   specularFactor?: number[]
   glossinessFactor?: number
@@ -18,6 +19,14 @@ class ExtPbrSpecularGlossiness extends GLTFExtensionBase {
    */
   validate() {
     return true
+  }
+
+  /**
+   * 
+   * @todo
+   */
+  json() {
+    return {}
   }
 }
 

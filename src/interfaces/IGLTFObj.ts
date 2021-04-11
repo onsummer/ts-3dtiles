@@ -1,6 +1,7 @@
 export default interface IGLTFObj {
-  asset: Object,
+  asset: IGLTFAsset,
   buffer: number,
+  buffers: [],
   bufferViews: [],
   accessors: [],
   scenes: [],
@@ -17,4 +18,13 @@ export default interface IGLTFObj {
   extensions?: Object,
   extras?: Object,
   skins?: []
+}
+
+export interface IGLTFAsset {
+  version: string
+  minVersion?: string
+  generator?: string
+  copyright?: string
+  extensions?: any
+  extras?: any
 }

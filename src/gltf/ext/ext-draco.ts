@@ -2,7 +2,7 @@ import GLTFPrimitiveAttribute from "../core/def/gltf-primitive-attribute";
 import GLTFExtensionBase from "./gltf-extension-base";
 
 class ExtDraco extends GLTFExtensionBase {
-  readonly name = "KHR_draco_mesh_compression"
+  _name: string = "KHR_draco_mesh_compression"
   bufferView: number
   attributes: GLTFPrimitiveAttribute
 
@@ -21,6 +21,17 @@ class ExtDraco extends GLTFExtensionBase {
 
   validate() {
     return Number.isInteger(this.bufferView)
+  }
+
+  /**
+   * @todo
+   */
+  json() {
+    return {
+      name: this._name,
+      bufferView: this.bufferView,
+      attributes: this.attributes.json()
+    }
   }
 }
 

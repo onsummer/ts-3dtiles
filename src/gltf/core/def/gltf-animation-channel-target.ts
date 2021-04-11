@@ -7,7 +7,9 @@ class GLTFAnimationChannelTarget implements IValidate {
   path: GLTFAnimationChannelTargetPath
   extensions: Set<GLTFExtensionBase> = new Set
 
-  validate = () => true
+  validate() {
+    return true
+  }
 }
 
 export default GLTFAnimationChannelTarget

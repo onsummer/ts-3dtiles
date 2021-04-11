@@ -1,3 +1,6 @@
+import readGLB from "./read-glb"
+import readGLTF from "./read-gltf"
+
 class GLTFReadAction {
   constructor() {
     
@@ -9,3 +12,8 @@ class GLTFReadAction {
 }
 
 export default GLTFReadAction
+
+export {
+  readGLTF
+  readGLB
+}
