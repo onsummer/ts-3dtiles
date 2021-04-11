@@ -3,7 +3,7 @@
   "repository": "onsummer/ts-3dtiles",
   "version": "0.0.0",
   "license": "MIT",
-  "main": "./dist/ts-3dtiles.cjs.js",
+  "main": "./dist/ts-3dtiles.common.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.ts"
