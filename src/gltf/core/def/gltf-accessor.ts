@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 import GLTFExtensionBase from "../../ext/gltf-extension-base"
 import GLTFAttributeType from "./enum/gltf-attribute-type"
 import GLTFComponentType from "./enum/gltf-component-type"

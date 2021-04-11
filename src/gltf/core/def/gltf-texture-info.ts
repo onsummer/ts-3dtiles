@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate";
+import IValidate from "../../../interfaces/IValidate";
 
 class GLTFTextureInfo implements IValidate {
   index: number

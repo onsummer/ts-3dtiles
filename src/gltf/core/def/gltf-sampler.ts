@@ -1,4 +1,4 @@
-import IValidate from '../../../typings/IValidate'
+import IValidate from '../../../interfaces/IValidate'
 import GLTFExtensionBase from '../../ext/gltf-extension-base'
 import GLTFFilter from './enum/gltf-filter'
 import GLTFWrapMode from './enum/gltf-wrapmode'

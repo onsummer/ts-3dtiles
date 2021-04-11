@@ -1,4 +1,4 @@
-import ITilesetConstructionParam from "../../../typings/tileset/ITilesetConstructionParam"
+import ITilesetConstructionParam from "../../../interfaces/tileset/ITilesetConstructionParam"
 import TilesetExtBase from "../../ext/ext-base"
 import Asset from "./asset"
 import Property from "./property"

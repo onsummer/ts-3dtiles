@@ -1,4 +1,4 @@
-import IValidate from "../../../../typings/IValidate"
+import IValidate from "../../../../interfaces/IValidate"
 import TileHeaderBase from "../tile-header-base"
 
 class I3dmHeader extends TileHeaderBase implements IValidate {

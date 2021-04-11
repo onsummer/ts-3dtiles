@@ -1,6 +1,6 @@
 import { IOBuffer } from 'iobuffer'
 
-import IValidate from "../../../../typings/IValidate"
+import IValidate from "../../../../interfaces/IValidate"
 
 import { GLTFDocument } from "../../../../gltf"
 import B3dmHeader from "./header"

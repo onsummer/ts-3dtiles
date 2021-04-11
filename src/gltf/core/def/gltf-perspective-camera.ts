@@ -1,5 +1,5 @@
-import IGLTFPerspectiveCameraConstructionParam from "../../../typings/IGLTFPerspectiveCameraConstructionParam";
-import IValidate from "../../../typings/IValidate";
+import IGLTFPerspectiveCameraConstructionParam from "../../../interfaces/IGLTFPerspectiveCameraConstructionParam";
+import IValidate from "../../../interfaces/IValidate";
 
 class GLTFPerspectiveCamera implements IValidate {
   yfov: number

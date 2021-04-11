@@ -1,6 +1,6 @@
-import IValidate from "../../../../typings/IValidate"
-import IFTBinaryRef from "../../../../typings/tileset/IFTBinaryRef"
-import IVctrFTJson from "../../../../typings/tileset/IVctrFTJson"
+import IValidate from "../../../../interfaces/IValidate"
+import IFTBinaryRef from "../../../../interfaces/tileset/IFTBinaryRef"
+import IVctrFTJson from "../../../../interfaces/tileset/IVctrFTJson"
 
 import FeatureTableType from "../enum/featuretable-type"
 import FeatureTable from "./featuretable-base"

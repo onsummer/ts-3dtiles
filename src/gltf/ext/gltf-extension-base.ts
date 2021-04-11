@@ -1,4 +1,4 @@
-import IValidate from "../../typings/IValidate"
+import IValidate from "../../interfaces/IValidate"
 
 class GLTFExtensionBase implements IValidate {
   get isRequire() {

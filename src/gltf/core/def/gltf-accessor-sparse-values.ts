@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate";
+import IValidate from "../../../interfaces/IValidate";
 import { GLTFExtensionBase } from "../../ext";
 
 class GLTFAccessorSparseValues implements IValidate {

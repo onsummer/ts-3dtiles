@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 import GLTFAccessorSparseIndices from "./gltf-accessor-sparse-indices"
 import GLTFAccessorSparseValues from "./gltf-accessor-sparse-values"
 

@@ -1,5 +1,5 @@
-import IValidate from "../../../../typings/IValidate"
-import IB3dmFTJson from "../../../../typings/tileset/IB3dmFTJson"
+import IValidate from "../../../../interfaces/IValidate"
+import IB3dmFTJson from "../../../../interfaces/tileset/IB3dmFTJson"
 
 import FeatureTableType from "../enum/featuretable-type"
 import FeatureTable from "./featuretable-base"

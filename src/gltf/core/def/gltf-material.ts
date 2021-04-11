@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 import GLTFAlphaMode from "./enum/gltf-alphamode"
 import GLTFPbr from "./gltf-pbr"
 import GLTFOcclusionTextureInfo from "./gltf-occlusion-texture-info"

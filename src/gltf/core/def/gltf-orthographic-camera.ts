@@ -1,4 +1,4 @@
-import IGLTFOrthographicCameraConstructionParam from '../../../typings/IGLTFOrthographicCameraConstructionParam'
+import IGLTFOrthographicCameraConstructionParam from '../../../interfaces/IGLTFOrthographicCameraConstructionParam'
 
 class GLTFOrthographicCamera {
   xmag: number

@@ -1,6 +1,6 @@
 import { IOBuffer } from "iobuffer"
 
-import IValidate from "../../../../typings/IValidate"
+import IValidate from "../../../../interfaces/IValidate"
 
 import { GLTFDocument } from "../../../.."
 import PntsFeatureTable from "../featuretable/featuretable-pnts"

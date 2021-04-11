@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 import GLTFExtensionBase from "../../ext/gltf-extension-base"
 import GLTFPrimitiveMode from "./enum/gltf-primitivemode"
 import GLTFPrimitiveAttribute from "./gltf-primitive-attribute"

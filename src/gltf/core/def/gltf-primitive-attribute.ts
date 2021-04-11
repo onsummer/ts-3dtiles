@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 
 class GLTFPrimitiveAttribute implements IValidate {
   position: number

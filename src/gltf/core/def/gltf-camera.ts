@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate"
+import IValidate from "../../../interfaces/IValidate"
 import { GLTFExtensionBase } from "../../ext"
 import GLTFCameraType from "./enum/gltf-cameratype"
 import GLTFOrthographicCamera from "./gltf-orthographic-camera"
