@@ -1,5 +1,2 @@
-declare class GLTFIOBase {
-}
-export default GLTFIOBase;
-export { default as GLTFWriteAction } from './write-action';
-export { default as GLTFReadAction } from './read-action';
+export * from './write-action';
+export * from './read-action';

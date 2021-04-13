@@ -1,5 +1,2 @@
-declare class GLTFReadAction {
-    constructor();
-    read(callback: () => void): void;
-}
-export default GLTFReadAction;
+export { default as readGLTF } from "./read-gltf";
+export { default as readGLB } from "./read-glb";

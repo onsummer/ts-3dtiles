@@ -1,19 +1,2 @@
-import readGLB from "./read-glb"
-import readGLTF from "./read-gltf"
-
-class GLTFReadAction {
-  constructor() {
-    
-  }
-
-  read(callback: () => void) {
-    callback()
-  }
-}
-
-export default GLTFReadAction
-
-export {
-  readGLTF,
-  readGLB
-}
+export { default as readGLTF } from "./read-gltf"
+export { default as readGLB } from "./read-glb"

@@ -1,6 +1,6 @@
-import IGLTFPerspectiveCameraConstructionParam from "../../../typings/IGLTFPerspectiveCameraConstructionParam";
-import IValidate from "../../../typings/IValidate";
-declare class GLTFPerspectiveCamera implements IValidate {
+import { IGLTFPerspectiveCameraConstructionParam, IValidate } from "src/interfaces";
+import ISerializable from "src/interfaces/ISerializable";
+declare class GLTFPerspectiveCamera implements IValidate, ISerializable {
     yfov: number;
     znear: number;
     zfar?: number;
@@ -10,5 +10,9 @@ declare class GLTFPerspectiveCamera implements IValidate {
      * @todo
      */
     validate(): boolean;
+    json(): {
+        yfov: number;
+        znear: number;
+    };
 }
 export default GLTFPerspectiveCamera;

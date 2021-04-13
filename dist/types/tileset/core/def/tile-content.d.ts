@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate";
+import IValidate from "../../../interfaces/IValidate";
 import TilesetExtBase from "../../ext/ext-base";
 import TileBoundingVolume from "./tile-bounding-volume";
 declare class TileContent implements IValidate {

@@ -1,4 +1,4 @@
-import IValidate from "../../../../typings/IValidate";
+import IValidate from "../../../../interfaces/IValidate";
 import FeatureTable from "./featuretable-base";
 declare class B3dmFeatureTable extends FeatureTable implements IValidate {
     batchLength: number;

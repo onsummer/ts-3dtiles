@@ -5,3 +5,5 @@ export { default as ExtImplicitTiling } from './ext-implicit-tiling'
 export { default as ExtLayers } from './ext-layers'
 export { default as ExtMetadata } from './ext-metadata'
 export { default as ExtMultipleContent } from './ext-multiple-content'
+
+export { default as TilesetExtBase } from './ext-base'

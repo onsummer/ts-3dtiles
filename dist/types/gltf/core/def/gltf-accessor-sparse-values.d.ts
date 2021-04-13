@@ -1,9 +1,13 @@
-import IValidate from "../../../typings/IValidate";
-import { GLTFExtensionBase } from "../../ext";
-declare class GLTFAccessorSparseValues implements IValidate {
+import { GLTFExtensionBase } from "src/gltf/ext";
+import { ISerializable, IValidate } from "src/interfaces";
+declare class GLTFAccessorSparseValues implements IValidate, ISerializable {
     bufferView: number;
     byteOffset?: number;
-    extensions: Set<GLTFExtensionBase>;
+    extensions?: Set<GLTFExtensionBase>;
+    extras?: any;
     validate(): boolean;
+    json(): {
+        bufferView: number;
+    };
 }
 export default GLTFAccessorSparseValues;

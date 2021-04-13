@@ -1,5 +1,5 @@
-import IValidate from "../../../../typings/IValidate";
-import IFTBinaryRef from "../../../../typings/tileset/IFTBinaryRef";
+import IValidate from "../../../../interfaces/IValidate";
+import IFTBinaryRef from "../../../../interfaces/tileset/IFTBinaryRef";
 import FeatureTable from "./featuretable-base";
 declare class VctrFeatureTable extends FeatureTable implements IValidate {
     region: number[];

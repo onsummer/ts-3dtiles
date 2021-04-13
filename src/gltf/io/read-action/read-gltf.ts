@@ -4,8 +4,6 @@ import { IGLTFAsset, IGLTFBuffer, IGLTFBufferView } from "src/interfaces/IGLTFOb
 import GLTFReadType from "src/interfaces/GLTFReadType"
 import GLTFResources from "src/interfaces/GLTFResources"
 
-const doc = new GLTFDocument()
-
 function readAsset(gltfAsset: GLTFAsset, json: IGLTFAsset) {
   gltfAsset.version = json.version === "1.0" ? GLTFVersion.ONE : GLTFVersion.TWO
   gltfAsset.minVersion = json.minVersion === "1.0" ? GLTFVersion.ONE : GLTFVersion.TWO
@@ -39,11 +37,15 @@ function readBufferViews(gltfBufferViews: GLTFBufferView[], json: IGLTFBufferVie
   }
 }
 
-function bind(doc: GLTFDocument) {
-  // 绑定 doc 到各个元素上
-}
+// function bind(doc: GLTFDocument) {
+//   // 绑定 doc 到各个元素上
+// }
 
 const readGLTF = (json: GLTFReadType, ...resources: GLTFResources[]): GLTFDocument => {
+  const doc = new GLTFDocument()
+  let resourcesLength = resources.length
+  console.log(`Resources Length is ${resourcesLength}`);
+
   let obj = json
   if (typeof json === "string") {
     obj = JSON.parse(json.trim())
@@ -55,7 +57,7 @@ const readGLTF = (json: GLTFReadType, ...resources: GLTFResources[]): GLTFDocume
   readBuffers(doc.buffers, obj['buffers'])
   readBufferViews(doc.bufferViews, obj['bufferViews'])
 
-  bind(doc)
+  // bind(doc)
   return doc
 }
 

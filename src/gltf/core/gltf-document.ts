@@ -30,9 +30,9 @@ class GLTFDocument implements ISerializable {
   scenes: GLTFScene[] = []
   nodes: GLTFNode[] = []
   meshes: GLTFMesh[] = []
-  
-  materials?: GLTFMaterial[] = []
-  textures?: GLTFTexture[] = []
+
+  materials?: GLTFMaterial[]
+  textures?: GLTFTexture[]
   images?: GLTFImage[]
   samplers?: GLTFSampler[]
 
@@ -48,24 +48,22 @@ class GLTFDocument implements ISerializable {
   json() {
     const gltfObj = {
       asset: this.asset.json(),
-      scene: this.scene,
       buffers: this.buffers.map(buffer => buffer.json()),
       bufferViews: this.bufferViews.map(bufferView => bufferView.json()),
       accessors: this.accessors.map(acc => acc.json()),
-
+      
       scenes: this.scenes.map(scene => scene.json()),
       nodes: this.nodes.map(node => node.json()),
       meshes: this.meshes.map(mesh => mesh.json()),
-
-      materials: this.materials?.map(mt => mt.json()),
-      textures: this.textures?.map(tx => tx.json()),
-      images: this.images?.map(img => img.json()),
-      samplers: this.samplers?.map(spl => spl.json()),
-
-      cameras: this.cameras?.map(c => c.json()),
-      animations: this.animations?.map(ani => ani.json()),
-      skins: this.skins?.map(skin => skin.json())
     }
+    writeDefinedProperty(gltfObj, 'scene', this.scene)
+    writeDefinedProperty(gltfObj, 'materials', this.materials !== undefined && this.materials.length !== 0 ? this.materials.map(mt => mt.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'textures', this.textures !== undefined && this.textures.length !== 0 ? this.textures.map(tx => tx.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'images', this.images !== undefined && this.images.length !== 0 ? this.images.map(img => img.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'samplers', this.samplers !== undefined && this.samplers.length !== 0 ? this.samplers.map(spl => spl.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'cameras', this.cameras !== undefined && this.cameras.length !== 0 ? this.cameras.map(c => c.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'animations', this.animations !== undefined && this.animations.length !== 0 ? this.animations.map(ani => ani.json()) : undefined)
+    writeDefinedProperty(gltfObj, 'skins', this.skins !== undefined && this.skins.length !== 0 ? this.skins.map(skin => skin.json()) : undefined)
 
     writeExtensionsProperty(gltfObj, this.extensions)
     writeDefinedProperty(gltfObj, 'extras', this.extras)

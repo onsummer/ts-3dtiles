@@ -1,7 +1,7 @@
-import GLTFTextureInfo from "../core/def/gltf-texture-info";
+import { GLTFTextureInfo } from "../core";
 import GLTFExtensionBase from "./gltf-extension-base";
 declare class ExtPbrSpecularGlossiness extends GLTFExtensionBase {
-    readonly name = "KHR_materials_pbrSpecularGlossiness";
+    _name: string;
     diffuseFactor?: number[];
     specularFactor?: number[];
     glossinessFactor?: number;
@@ -12,5 +12,10 @@ declare class ExtPbrSpecularGlossiness extends GLTFExtensionBase {
      * @todo
      */
     validate(): boolean;
+    /**
+     *
+     * @todo
+     */
+    json(): {};
 }
 export default ExtPbrSpecularGlossiness;

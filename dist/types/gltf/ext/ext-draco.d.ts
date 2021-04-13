@@ -1,7 +1,7 @@
-import GLTFPrimitiveAttribute from "../core/def/gltf-primitive-attribute";
+import { GLTFPrimitiveAttribute } from "../core";
 import GLTFExtensionBase from "./gltf-extension-base";
 declare class ExtDraco extends GLTFExtensionBase {
-    readonly name = "KHR_draco_mesh_compression";
+    _name: string;
     bufferView: number;
     attributes: GLTFPrimitiveAttribute;
     get isRequire(): boolean;
@@ -10,5 +10,15 @@ declare class ExtDraco extends GLTFExtensionBase {
         attributes: GLTFPrimitiveAttribute;
     });
     validate(): boolean;
+    /**
+     * @todo
+     */
+    json(): {
+        name: string;
+        bufferView: number;
+        attributes: {
+            POSITION: number;
+        };
+    };
 }
 export default ExtDraco;

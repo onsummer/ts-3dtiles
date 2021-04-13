@@ -1,4 +1,4 @@
-import IValidate from "../../../typings/IValidate";
+import IValidate from "../../../interfaces/IValidate";
 declare class TileHeaderBase implements IValidate {
     magic: string;
     version: number;

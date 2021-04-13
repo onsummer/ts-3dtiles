@@ -1,6 +1,6 @@
-import IValidate from "../../../../typings/IValidate";
-import IBTBinaryRef from "../../../../typings/tileset/IBTBinaryRef";
-import IBTJson, { BTJsonValue } from "../../../../typings/tileset/IBTJson";
+import IValidate from "../../../../interfaces/IValidate";
+import IBTBinaryRef from "../../../../interfaces/tileset/IBTBinaryRef";
+import IBTJson, { BTJsonValue } from "../../../../interfaces/tileset/IBTJson";
 import TilesetExtBase from "../../../ext/ext-base";
 declare class BatchTable implements IValidate {
     _json: IBTJson;

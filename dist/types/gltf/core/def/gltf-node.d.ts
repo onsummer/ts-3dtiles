@@ -1,6 +1,6 @@
-import IValidate from "../../../typings/IValidate";
-import GLTFExtensionBase from "../../ext/gltf-extension-base";
-declare class GLTFNode implements IValidate {
+import { GLTFExtensionBase } from "src/gltf/ext";
+import { ISerializable, IValidate } from "src/interfaces";
+declare class GLTFNode implements IValidate, ISerializable {
     children: number[];
     mesh?: number;
     rotation?: number[];
@@ -11,7 +11,8 @@ declare class GLTFNode implements IValidate {
     camera?: number;
     matrix?: number[];
     scale?: number[];
-    extensions: Set<GLTFExtensionBase>;
+    extensions?: Set<GLTFExtensionBase>;
+    extras?: any;
     constructor(options: {
         children?: number[];
         mesh?: number;
@@ -26,5 +27,6 @@ declare class GLTFNode implements IValidate {
     });
     private validateTransforms;
     validate(): boolean;
+    json(): {};
 }
 export default GLTFNode;

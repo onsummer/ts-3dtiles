@@ -1,4 +1,4 @@
-import IValidate from "../../../../typings/IValidate";
+import IValidate from "../../../../interfaces/IValidate";
 import { BatchTable } from "../batchtable";
 import { FeatureTable } from "../featuretable";
 import VctrHeader from "./header";
