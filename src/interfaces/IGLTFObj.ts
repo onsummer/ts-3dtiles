@@ -1,8 +1,8 @@
 export default interface IGLTFObj {
   asset: IGLTFAsset,
-  buffer: number,
-  buffers: [],
-  bufferViews: [],
+  scene?: number,
+  buffers: IGLTFBuffer[],
+  bufferViews: IGLTFBufferView[],
   accessors: [],
   scenes: [],
   nodes: [],
@@ -27,4 +27,21 @@ export interface IGLTFAsset {
   copyright?: string
   extensions?: any
   extras?: any
+}
+
+export interface IGLTFBuffer {
+  uri?: string,
+  byteLength: number
+  extensions?: any
+  extras?: any
+}
+
+export interface IGLTFBufferView {
+  buffer: number
+  byteLength: number
+  byteOffset?: number
+  byteStride?: number
+  extensions?: any
+  extras?: any
+  target?: number
 }

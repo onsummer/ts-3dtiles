@@ -1,5 +1,5 @@
-import GLTFTextureInfo from "../core/def/gltf-texture-info";
-import GLTFExtensionBase from "./gltf-extension-base";
+import { GLTFTextureInfo } from "../core"
+import GLTFExtensionBase from "./gltf-extension-base"
 
 class ExtPbrSpecularGlossiness extends GLTFExtensionBase {
   _name: string = "KHR_materials_pbrSpecularGlossiness"

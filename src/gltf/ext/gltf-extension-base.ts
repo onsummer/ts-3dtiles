@@ -1,5 +1,4 @@
-import ISerializable from "src/interfaces/ISerializable"
-import IValidate from "../../interfaces/IValidate"
+import { ISerializable, IValidate } from "src/interfaces"
 
 class GLTFExtensionBase implements IValidate, ISerializable {
   protected _name: string = ""

@@ -47,6 +47,8 @@ class GLTFPrimitiveAttribute implements IValidate, ISerializable {
     writeDefinedProperty(attr, 'COLOR_0', this.color0)
     writeDefinedProperty(attr, 'JOINTS_0', this.joints0)
     writeDefinedProperty(attr, 'WEIGHTS_0', this.weights0)
+
+    return attr
   }
 }
 

@@ -1,21 +1,25 @@
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
-import GLTFAttributeType from "./enum/gltf-attribute-type"
-import GLTFComponentType from "./enum/gltf-component-type"
+import { GLTFExtensionBase } from "src/gltf/ext"
+import { ISerializable, IValidate } from "src/interfaces"
+import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
+import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import { GLTFAttributeType, GLTFComponentType } from "./enum"
+import GLTFAccessorSparse from "./gltf-accessor-sparse"
 
-class GLTFAccessor implements IValidate {
+
+class GLTFAccessor implements IValidate, ISerializable {
   componentType: GLTFComponentType
   count: number
   type: GLTFAttributeType
   max?: number[]
   min?: number[]
-  sparse?: any
+  sparse?: GLTFAccessorSparse
   name?: string
   normalized?: boolean
   bufferView?: number
   byteOffset?: number
 
-  extensions: Set<GLTFExtensionBase> = new Set()
+  extensions?: Set<GLTFExtensionBase> = new Set()
+  extras?: any
 
   constructor(options: {
     componentType: GLTFComponentType
@@ -33,6 +37,30 @@ class GLTFAccessor implements IValidate {
       return true
     }
     return false
+  }
+
+  json() {
+    if (!this.validate()) {
+      throw new Error('[GLTFAccessor json()] 当前 accessor 属性不合法，请检查')
+    }
+
+    const acc = {
+      componentType: this.componentType,
+      type: this.type,
+      count: this.count,
+    }
+
+    writeDefinedProperty(acc, 'max', this.max)
+    writeDefinedProperty(acc, 'min', this.min)
+    writeDefinedProperty(acc, 'name', this.name)
+    writeDefinedProperty(acc, 'normalized', this.normalized)
+    writeDefinedProperty(acc, 'sparse', this.sparse !== undefined ? this.sparse.json() : undefined)
+    writeDefinedProperty(acc, 'bufferView', this.bufferView)
+    writeDefinedProperty(acc, 'byteOffset', this.byteOffset)
+    writeExtensionsProperty(acc, this.extensions)
+    writeDefinedProperty(acc, 'extras', this.extras)
+    
+    return acc
   }
 }
 

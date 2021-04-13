@@ -1,5 +1,6 @@
-import GLTFPrimitiveAttribute from "../core/def/gltf-primitive-attribute";
-import GLTFExtensionBase from "./gltf-extension-base";
+import { GLTFPrimitiveAttribute } from "../core"
+import GLTFExtensionBase from "./gltf-extension-base"
+
 
 class ExtDraco extends GLTFExtensionBase {
   _name: string = "KHR_draco_mesh_compression"

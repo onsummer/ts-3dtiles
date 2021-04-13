@@ -1,7 +1,9 @@
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import { GLTFExtensionBase } from "src/gltf/ext"
+import { ISerializable, IValidate } from "src/interfaces"
+import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
+import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
 
-class GLTFNode implements IValidate {
+class GLTFNode implements IValidate, ISerializable {
   children: number[] = []
   mesh?: number
   rotation?: number[]
@@ -12,7 +14,8 @@ class GLTFNode implements IValidate {
   camera?: number
   matrix?: number[]
   scale?: number[]
-  extensions: Set<GLTFExtensionBase> = new Set()
+  extensions?: Set<GLTFExtensionBase> = new Set()
+  extras?: any
 
   constructor(options: {
     children?: number[]
@@ -80,6 +83,32 @@ class GLTFNode implements IValidate {
       return false
     }
     return true
+  }
+
+  json() {
+    if (!this.validate()) {
+      throw new Error('[GLTFNode json()] 当前 node 属性不合法，请检查属性')
+    }
+
+    const n = {}
+
+    writeDefinedProperty(n, 'mesh', this.mesh)
+    writeDefinedProperty(n, 'rotation', this.rotation)
+    writeDefinedProperty(n, 'translation', this.translation)
+    writeDefinedProperty(n, 'scale', this.scale)
+    writeDefinedProperty(n, 'matrix', this.matrix)
+    writeDefinedProperty(n, 'weights', this.weights)
+    writeDefinedProperty(n, 'skin', this.skin)
+    writeDefinedProperty(n, 'camera', this.camera)
+    writeDefinedProperty(n, 'name', this.name)
+    
+    if (this.children.length !== 0) {
+      writeDefinedProperty(n, 'children', this.children)
+    }
+    writeExtensionsProperty(n, this.extensions)
+    writeDefinedProperty(n, 'extras', this.extras)
+
+    return n
   }
 }
 

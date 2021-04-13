@@ -14,6 +14,6 @@ class GLTFReadAction {
 export default GLTFReadAction
 
 export {
-  readGLTF
+  readGLTF,
   readGLB
 }

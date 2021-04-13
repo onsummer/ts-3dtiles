@@ -21,7 +21,7 @@ import {
 
 class GLTFDocument implements ISerializable {
   asset: GLTFAsset = new GLTFAsset()
-  scene: number = 0
+  scene?: number = 0
 
   buffers: GLTFBuffer[] = []
   bufferViews: GLTFBufferView[] = []
@@ -46,32 +46,28 @@ class GLTFDocument implements ISerializable {
   extensionsRequired?: string[]
 
   json() {
-    // if (!this.validate()) {
-    //   throw new Error('[GLTFDocument json()] 文档校验失败')
-    // }
-
     const gltfObj = {
       asset: this.asset.json(),
       scene: this.scene,
       buffers: this.buffers.map(buffer => buffer.json()),
-      // bufferViews: this.bufferViews.map(bufferView => bufferView.json()),
-      // accessors: this.accessors.map(acc => acc.json()),
+      bufferViews: this.bufferViews.map(bufferView => bufferView.json()),
+      accessors: this.accessors.map(acc => acc.json()),
 
       scenes: this.scenes.map(scene => scene.json()),
-      // nodes: this.nodes.map(node => node.json()),
+      nodes: this.nodes.map(node => node.json()),
       meshes: this.meshes.map(mesh => mesh.json()),
 
-      // materials: this.materials?.map(mt => mt.json()),
+      materials: this.materials?.map(mt => mt.json()),
       textures: this.textures?.map(tx => tx.json()),
       images: this.images?.map(img => img.json()),
       samplers: this.samplers?.map(spl => spl.json()),
 
-      // cameras: this.cameras?.map(c => c.json()),
-      // animations: this.animations?.map(ani => ani.json()),
-      // skins: this.skins?.map(skin => skin.json())
+      cameras: this.cameras?.map(c => c.json()),
+      animations: this.animations?.map(ani => ani.json()),
+      skins: this.skins?.map(skin => skin.json())
     }
 
-    writeExtensionsProperty(gltfObj, <Set<GLTFExtensionBase>>this.extensions)
+    writeExtensionsProperty(gltfObj, this.extensions)
     writeDefinedProperty(gltfObj, 'extras', this.extras)
     writeDefinedProperty(gltfObj, 'extensionsUsed', this.extensionsUsed)
     writeDefinedProperty(gltfObj, 'extensionsRequired', this.extensionsRequired)
