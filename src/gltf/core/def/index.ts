@@ -37,3 +37,5 @@ export { default as GLTFOrthographicCamera } from './gltf-orthographic-camera'
 
 /* enums */
 export * from './enum'
+
+export { default as GLTFPropertyBase } from './gltf-property-base'

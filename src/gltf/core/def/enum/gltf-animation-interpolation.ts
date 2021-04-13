@@ -1,7 +1,7 @@
 enum GLTFAnimationInterpolation {
-  LINEAR,
-  STEP,
-  CUBICSPLINE,
+  LINEAR = "LINEAR",
+  STEP = "STEP",
+  CUBICSPLINE = "CUBICSPLINE",
 }
 
 export default GLTFAnimationInterpolation

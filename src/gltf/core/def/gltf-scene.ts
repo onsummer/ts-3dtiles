@@ -7,10 +7,11 @@ import GLTFExtensionBase from "../../ext/gltf-extension-base"
 class GLTFScene implements IValidate, ISerializable {
   nodes: number[] = []
   name?: string
-  extensions: Set<GLTFExtensionBase> = new Set()
-  
+  extensions?: Set<GLTFExtensionBase> = new Set()
+  extras?: any
+
   validate() {
-    return (this.nodes.length < 1)
+    return this.nodes.length > 1
   }
 
   json() {

@@ -1,33 +1,37 @@
-import ts from "rollup-plugin-typescript2"
+import typescript from "rollup-plugin-typescript2" // 处理typescript
 import sourceMaps from "rollup-plugin-sourcemaps"
-import { uglify } from "rollup-plugin-uglify"
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import resolve from 'rollup-plugin-node-resolve' // 你的包用到第三方npm包
+import commonjs from 'rollup-plugin-commonjs' // 你的包用到的第三方只有commonjs形式的包
+import builtins from 'rollup-plugin-node-builtins' // 如果你的包或依赖用到了node环境的builtins fs等
+import { terser } from 'rollup-plugin-terser' // 压缩，可以判断模式，开发模式不加入到plugins
+
+const isProd = process.env.NODE_ENV === 'production'
+const basePlugins = [
+  typescript({ useTsconfigDeclarationDir: true }),
+  builtins(),
+  resolve({ preferBuiltins: false, mainFields: ['browser'] }),
+  commonjs(),
+  sourceMaps(),
+  terser(),
+]
+const devPlugins = []
+const prodPlugins = [terser()]
+const plugins = [...basePlugins].concat(isProd ? prodPlugins : devPlugins)
 
 const rollupConfig = {
   input: './src/index.ts',
   onwarn: function (warning) {
     if (warning.code === 'THIS_IS_UNDEFINED') {
-      return;
+      return
     }
-    console.error(warning.message);
+    console.error(warning.message)
   },
   /** plugins 必须有顺序的使用 */
-  plugins: [
-    // 使得 rollup 支持 commonjs 规范，识别 commonjs 规范的依赖
-    commonjs(),
-    resolve({ preferBuiltins: false, mainFields: ['browser'] }),
-
-    ts({
-      useTsconfigDeclarationDir: true
-    }),
-    sourceMaps(),
-    uglify(),
-  ],
+  plugins: plugins,
   output: [
     {
       format: "cjs",
-      file: "dist/ts-3dtiles.common.js",
+      file: "dist/index.js",
       sourcemap: true
     },
     {

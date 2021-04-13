@@ -1,8 +1,10 @@
+import { IGLTFPrimitiveAttribute } from "src/interfaces/IGLTFObj"
 import ISerializable from "src/interfaces/ISerializable"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import IValidate from "../../../interfaces/IValidate"
 
 class GLTFPrimitiveAttribute implements IValidate, ISerializable {
+
   position: number
   uv0?: number
   uv1?: number
@@ -12,24 +14,17 @@ class GLTFPrimitiveAttribute implements IValidate, ISerializable {
   joints0?: number
   weights0?: number
 
-  constructor(options: {
-    position: number,
-    uv0?: number,
-    uv1?: number,
-    color0?: number,
-    normal?: number,
-    tangent?: number,
-    joints0?: number
-    weights0?: number
-  }) {
-    this.position = options.position
-    this.uv0 = options.uv0
-    this.uv1 = options.uv1
-    this.color0 = options.color0
-    this.normal = options.normal
-    this.tangent = options.tangent
-    this.joints0 = options.joints0
-    this.weights0 = options.weights0
+  static readFromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute {
+    const attr = new GLTFPrimitiveAttribute()
+    attr.position = json.position
+    attr.uv0 = json.uv0
+    attr.uv1 = json.uv1
+    attr.color0 = json.color0
+    attr.normal = json.normal
+    attr.tangent = json.tangent
+    attr.joints0 = json.joints0
+    attr.weights0 = json.weights0
+    return attr
   }
 
   validate() {

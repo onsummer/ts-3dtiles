@@ -31,13 +31,10 @@ const readGLB = (binary: Uint8Array | ArrayBuffer | Buffer) => {
   let binarydata = undefined
   try {
     binarydata = io.readBytes(binByteLength)
+    /* read as gltfdocument */
+    return readGLTF(json, binarydata)
   } catch {
     throw new Error("[readGLB()] 数据长度异常，试检查 glb binary 块有无问题")
-  }
-
-  /* read as gltfdocument */
-  if (binarydata) {
-    return readGLTF(json, binarydata)
   }
 }
 

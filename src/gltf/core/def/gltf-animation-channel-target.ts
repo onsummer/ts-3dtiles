@@ -5,9 +5,10 @@ import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
 import GLTFAnimationChannelTargetPath from "./enum/gltf-animation-channel-target-path"
 
 class GLTFAnimationChannelTarget implements IValidate, ISerializable {
-  node?: number
   path: GLTFAnimationChannelTargetPath
-  extensions: Set<GLTFExtensionBase> = new Set
+  node?: number
+  extensions?: Set<GLTFExtensionBase> = new Set
+  extras?: any
 
   validate() {
     return true
@@ -18,8 +19,9 @@ class GLTFAnimationChannelTarget implements IValidate, ISerializable {
       path: this.path,
     }
 
-    writeExtensionsProperty(act, this.extensions)
     writeDefinedProperty(act, 'node', this.node)
+    writeExtensionsProperty(act, this.extensions)
+    writeDefinedProperty(act, 'extras', this.extras)
 
     return act
   }

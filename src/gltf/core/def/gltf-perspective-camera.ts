@@ -1,5 +1,4 @@
-import { IGLTFPerspectiveCameraConstructionParam, IValidate } from "src/interfaces"
-import ISerializable from "src/interfaces/ISerializable"
+import { ISerializable, IValidate } from "src/interfaces"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 
 class GLTFPerspectiveCamera implements IValidate, ISerializable {
@@ -8,18 +7,14 @@ class GLTFPerspectiveCamera implements IValidate, ISerializable {
   zfar?: number
   aspectRatio?: number
 
-  constructor(options: IGLTFPerspectiveCameraConstructionParam) {
-    this.yfov = options.yfov
-    this.znear = options.znear
-    this.zfar = options.zfar
-    this.aspectRatio = options.aspectRatio
-  }
-
-  /**
-   * @todo 
-   */
   validate() {
-    return false
+    let flag = this.yfov >= 0 && this.znear >= 0
+
+    this.aspectRatio !== undefined ? flag = flag && this.aspectRatio >= 0 : flag
+    this.zfar !== undefined ? flag = flag && this.zfar >= 0 : flag
+    this.zfar !== undefined ? flag = flag && this.zfar > this.znear : flag
+
+    return flag
   }
 
   json() {

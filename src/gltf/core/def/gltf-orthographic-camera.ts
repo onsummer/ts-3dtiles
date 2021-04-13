@@ -1,6 +1,4 @@
-import { IGLTFOrthographicCameraConstructionParam, IValidate } from "src/interfaces"
-import ISerializable from "src/interfaces/ISerializable"
-
+import { ISerializable, IValidate } from "src/interfaces"
 
 class GLTFOrthographicCamera implements IValidate, ISerializable {
   xmag: number
@@ -8,23 +6,13 @@ class GLTFOrthographicCamera implements IValidate, ISerializable {
   zfar: number
   znear: number
 
-  constructor(options: IGLTFOrthographicCameraConstructionParam) {
-    this.xmag = options.xmag
-    this.ymag = options.ymag
-    this.zfar = options.zfar
-    this.znear = options.znear
-  }
-
-  /**
-   * @todo
-   */
   validate() {
-    return false
+    return this.znear >= 0 && this.zfar >= 0 && this.xmag !== 0 && this.ymag !== 0 && this.zfar > this.znear
   }
 
   json() {
     if (!this.validate()) {
-      throw new Error('[GLTFOrthographicCamera json()] 当前对象属性不合法，请检查')
+      throw new Error('[GLTFOrthographicCamera json()] 当前 orthographic camera 对象属性不合法，请检查')
     }
 
     const c = {

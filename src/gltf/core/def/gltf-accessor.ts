@@ -21,16 +21,6 @@ class GLTFAccessor implements IValidate, ISerializable {
   extensions?: Set<GLTFExtensionBase> = new Set()
   extras?: any
 
-  constructor(options: {
-    componentType: GLTFComponentType
-    count: number
-    type: GLTFAttributeType
-  }) {
-    this.componentType = options.componentType
-    this.count = options.count
-    this.type = options.type
-  }
-
   validate() {
     /** byteOffset 和 bufferView 必须同时存在 */
     if (this.byteOffset !== undefined && this.bufferView !== undefined) {

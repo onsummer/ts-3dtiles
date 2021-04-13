@@ -9,8 +9,9 @@ class GLTFMesh implements IValidate, ISerializable {
   primitives: GLTFPrimitive[] = []
   weights?: number[]
   name?: string
-  extensions: Set<GLTFExtensionBase> = new Set()
-
+  extensions?: Set<GLTFExtensionBase> = new Set()
+  extras?: any
+  
   validate() {
     let flag = false
     if (this.primitives.every(primitive => primitive.validate())) {

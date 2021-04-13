@@ -1,3 +1,4 @@
+import { IGLTFAsset } from "src/interfaces/IGLTFObj"
 import ISerializable from "src/interfaces/ISerializable"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import IValidate from "../../../interfaces/IValidate"
@@ -25,6 +26,16 @@ class GLTFAsset implements IValidate, ISerializable {
     writeDefinedProperty(asset, 'extensions', this.generator)
     writeDefinedProperty(asset, 'extras', this.extras)
 
+    return asset
+  }
+
+  static readFromJson(json: IGLTFAsset): GLTFAsset {
+    const asset = new GLTFAsset()
+    asset.version = json.version as GLTFVersion
+    asset.minVersion = json.minVersion as GLTFVersion
+    asset.copyright = json.copyright
+    asset.generator = json.generator
+    asset.extras = json.extras
     return asset
   }
 }

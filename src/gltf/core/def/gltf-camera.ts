@@ -15,18 +15,6 @@ class GLTFCamera implements IValidate, ISerializable {
   extensions?: Set<GLTFExtensionBase> = new Set()
   extras?: any
 
-  constructor(options: {
-    orthographic?: GLTFOrthographicCamera
-    perspective?: GLTFPerspectiveCamera
-    type: GLTFCameraType
-    name?: string
-  }) {
-    this.orthographic = options.orthographic
-    this.perspective = options.perspective
-    this.type = options.type
-    this.name = options.name
-  }
-
   validate() {
     if (this.orthographic !== undefined && this.perspective !== undefined) {
       return false
@@ -36,7 +24,7 @@ class GLTFCamera implements IValidate, ISerializable {
 
   json() {
     if (!this.validate()) {
-      throw new Error('[GLTFCamera json()] 数据有问题，请检查 camera 对象的合法性')
+      throw new Error('[GLTFCamera json()] 当前 camera 对象属性不合法，请检查')
     }
 
     const camera = {

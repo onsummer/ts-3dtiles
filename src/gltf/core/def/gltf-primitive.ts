@@ -7,33 +7,12 @@ import GLTFPrimitiveMode from "./enum/gltf-primitivemode"
 import GLTFPrimitiveAttribute from "./gltf-primitive-attribute"
 
 class GLTFPrimitive implements IValidate, ISerializable {
-  attribute: GLTFPrimitiveAttribute
+  attribute: GLTFPrimitiveAttribute = new GLTFPrimitiveAttribute()
   indices?: number
   material?: number
-  mode: GLTFPrimitiveMode = GLTFPrimitiveMode.TRIANGLES
-  extensions: Set<GLTFExtensionBase> = new Set()
-  extras: any
-
-  constructor(options: {
-    attribute: {
-      position: number,
-      [propName: string]: any
-    },
-    indices?: number,
-    material?: number,
-    mode?: GLTFPrimitiveMode
-  }) {
-    this.attribute = new GLTFPrimitiveAttribute({
-      position: options.attribute.position,
-      uv0: options.attribute['uv0'],
-      normal: options.attribute['normal']
-    })
-    this.indices = options.indices
-    this.material = options.material
-    if (options.mode! !== GLTFPrimitiveMode.TRIANGLES) {
-      this.mode = <GLTFPrimitiveMode>options.mode
-    }
-  }
+  mode?: GLTFPrimitiveMode = GLTFPrimitiveMode.TRIANGLES
+  extensions?: Set<GLTFExtensionBase> = new Set()
+  extras?: any
 
   validate() {
     if (this.attribute.validate() === false) {
