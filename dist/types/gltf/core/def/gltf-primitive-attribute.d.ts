@@ -1,3 +1,4 @@
+import { IGLTFPrimitiveAttribute } from "src/interfaces/IGLTFObj";
 import ISerializable from "src/interfaces/ISerializable";
 import IValidate from "../../../interfaces/IValidate";
 declare class GLTFPrimitiveAttribute implements IValidate, ISerializable {
@@ -9,16 +10,9 @@ declare class GLTFPrimitiveAttribute implements IValidate, ISerializable {
     tangent?: number;
     joints0?: number;
     weights0?: number;
-    constructor(options: {
-        position: number;
-        uv0?: number;
-        uv1?: number;
-        color0?: number;
-        normal?: number;
-        tangent?: number;
-        joints0?: number;
-        weights0?: number;
-    });
+    /** 3rd */
+    _batchid?: number;
+    static readFromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute;
     validate(): boolean;
     json(): {
         POSITION: number;

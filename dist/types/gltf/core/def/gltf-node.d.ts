@@ -1,6 +1,6 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
-declare class GLTFNode implements IValidate, ISerializable {
+import { IGLTFNode } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
+declare class GLTFNode extends GLTFPropertyBase {
     children: number[];
     mesh?: number;
     rotation?: number[];
@@ -11,22 +11,9 @@ declare class GLTFNode implements IValidate, ISerializable {
     camera?: number;
     matrix?: number[];
     scale?: number[];
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
-    constructor(options: {
-        children?: number[];
-        mesh?: number;
-        rotation?: number[];
-        translation?: number[];
-        weights?: number[];
-        name?: string;
-        skin?: number;
-        camera?: number;
-        matrix?: number[];
-        scale?: number[];
-    });
-    private validateTransforms;
+    constructor();
     validate(): boolean;
     json(): {};
+    static readFromJson(json: IGLTFNode): GLTFNode;
 }
 export default GLTFNode;

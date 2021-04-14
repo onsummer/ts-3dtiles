@@ -1,18 +1,18 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
+import { IGLTFBufferView } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFBufferViewTarget from "./enum/gltf-bufferview-target";
-declare class GLTFBufferView implements IValidate, ISerializable {
+declare class GLTFBufferView extends GLTFPropertyBase {
     buffer: number;
     byteLength: number;
     byteOffset?: number;
     byteStride?: number;
     target?: GLTFBufferViewTarget;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {
         buffer: number;
         byteLength: number;
     };
+    static readFromJson(json: IGLTFBufferView): GLTFBufferView;
 }
 export default GLTFBufferView;

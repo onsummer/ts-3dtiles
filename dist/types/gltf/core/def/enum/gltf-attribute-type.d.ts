@@ -7,5 +7,6 @@ declare enum GLTFAttributeType {
     MAT3 = "MAT3",
     MAT4 = "MAT4"
 }
+export declare const GLTFAttributeTypeValues: readonly string[];
 export declare const getAttributeTypeElementCount: (t: GLTFAttributeType) => number;
 export default GLTFAttributeType;

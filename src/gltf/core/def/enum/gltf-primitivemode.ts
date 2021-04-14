@@ -8,4 +8,6 @@ enum GLTFPrimitiveMode {
   TRIANGLE_FAN = 6
 }
 
+export const GLTFPrimitiveModeValues = Object.freeze(Object.values(GLTFPrimitiveMode) as Array<number>)
+
 export default GLTFPrimitiveMode

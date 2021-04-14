@@ -1,17 +1,17 @@
 import { IGLTFAsset } from "src/interfaces/IGLTFObj"
-import ISerializable from "src/interfaces/ISerializable"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
-import GLTFVersion from "./enum/gltf-version"
+import GLTFPropertyBase from "./gltf-property-base"
+import GLTFVersion, { GLTFVersionValues } from "./enum/gltf-version"
 
-class GLTFAsset implements IValidate, ISerializable {
+class GLTFAsset extends GLTFPropertyBase {
   version: GLTFVersion = GLTFVersion.TWO
   generator?: string
   copyright?: string
   minVersion?: GLTFVersion
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
+
+  constructor() {
+    super()
+  }
 
   validate() {
     return true
@@ -31,8 +31,18 @@ class GLTFAsset implements IValidate, ISerializable {
 
   static readFromJson(json: IGLTFAsset): GLTFAsset {
     const asset = new GLTFAsset()
-    asset.version = json.version as GLTFVersion
-    asset.minVersion = json.minVersion as GLTFVersion
+    if (GLTFVersionValues.includes(json.version)) {
+      asset.version = json.version as GLTFVersion
+    } else {
+      throw new Error(`[GLTFAsset.readFromJson()] 参数 version：${json.version} 不合法，请检查`)
+    }
+
+    if (json.minVersion !== undefined) {
+      if (GLTFVersionValues.includes(json.minVersion))
+        asset.minVersion = json.version as GLTFVersion
+      else
+        throw new Error(`[GLTFAsset.readFromJson()] 参数 minVersion: ${json.minVersion} 不合法，请检查`)
+    }
     asset.copyright = json.copyright
     asset.generator = json.generator
     asset.extras = json.extras

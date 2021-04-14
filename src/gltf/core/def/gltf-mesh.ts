@@ -1,16 +1,17 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFMesh } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPropertyBase from "./gltf-property-base"
 import GLTFPrimitive from "./gltf-primitive"
 
-class GLTFMesh implements IValidate, ISerializable {
+class GLTFMesh extends GLTFPropertyBase {
   primitives: GLTFPrimitive[] = []
   weights?: number[]
   name?: string
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
+  
+  constructor() {
+    super()
+  }
   
   validate() {
     let flag = false
@@ -28,6 +29,15 @@ class GLTFMesh implements IValidate, ISerializable {
     writeDefinedProperty(mesh, 'name', this.name)
     writeExtensionsProperty(mesh, this.extensions)
 
+    return mesh
+  }
+
+  static readFromJson(json: IGLTFMesh) {
+    const mesh = new GLTFMesh()
+    mesh.name = json.name
+    mesh.primitives = json.primitives.map(priJson => GLTFPrimitive.readFromJson(priJson))
+    mesh.weights = json.weights
+    mesh.extras = json.extras
     return mesh
   }
 }

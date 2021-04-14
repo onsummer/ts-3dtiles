@@ -1,29 +1,19 @@
-import ISerializable from "src/interfaces/ISerializable";
-import IValidate from "../../../interfaces/IValidate";
-import GLTFExtensionBase from "../../ext/gltf-extension-base";
+import { IGLTFPrimitive } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFPrimitiveMode from "./enum/gltf-primitivemode";
 import GLTFPrimitiveAttribute from "./gltf-primitive-attribute";
-declare class GLTFPrimitive implements IValidate, ISerializable {
-    attribute: GLTFPrimitiveAttribute;
+declare class GLTFPrimitive extends GLTFPropertyBase {
+    attributes: GLTFPrimitiveAttribute;
     indices?: number;
     material?: number;
-    mode: GLTFPrimitiveMode;
-    extensions: Set<GLTFExtensionBase>;
-    extras: any;
-    constructor(options: {
-        attribute: {
-            position: number;
-            [propName: string]: any;
-        };
-        indices?: number;
-        material?: number;
-        mode?: GLTFPrimitiveMode;
-    });
+    mode?: GLTFPrimitiveMode;
+    constructor();
     validate(): boolean;
     json(): {
         attribute: {
             POSITION: number;
         };
     };
+    static readFromJson(json: IGLTFPrimitive): GLTFPrimitive;
 }
 export default GLTFPrimitive;

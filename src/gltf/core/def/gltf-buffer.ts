@@ -1,15 +1,16 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFBuffer } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFBuffer implements IValidate, ISerializable {
+class GLTFBuffer extends GLTFPropertyBase {
   byteLength: number = 0
   uri?: string
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   /** @deprecated */
   get url() {
     return this.uri
@@ -27,6 +28,15 @@ class GLTFBuffer implements IValidate, ISerializable {
     writeExtensionsProperty(bf, this.extensions)
     writeDefinedProperty(bf, 'extras', this.extras)
 
+    return bf
+  }
+
+  static readFromJson(json: IGLTFBuffer) {
+    const bf = new GLTFBuffer()
+    bf.uri = json.uri
+    bf.byteLength = json.byteLength
+    bf.extras = json.extras
+    // extensions 单独处理
     return bf
   }
 }

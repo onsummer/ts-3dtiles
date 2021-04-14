@@ -1,8 +1,8 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
+import { IGLTFAccessor } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import { GLTFAttributeType, GLTFComponentType } from "./enum";
 import GLTFAccessorSparse from "./gltf-accessor-sparse";
-declare class GLTFAccessor implements IValidate, ISerializable {
+declare class GLTFAccessor extends GLTFPropertyBase {
     componentType: GLTFComponentType;
     count: number;
     type: GLTFAttributeType;
@@ -13,18 +13,13 @@ declare class GLTFAccessor implements IValidate, ISerializable {
     normalized?: boolean;
     bufferView?: number;
     byteOffset?: number;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
-    constructor(options: {
-        componentType: GLTFComponentType;
-        count: number;
-        type: GLTFAttributeType;
-    });
+    constructor();
     validate(): boolean;
     json(): {
         componentType: GLTFComponentType;
         type: GLTFAttributeType;
         count: number;
     };
+    static readFromJson(json: IGLTFAccessor): GLTFAccessor;
 }
 export default GLTFAccessor;

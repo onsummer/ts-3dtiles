@@ -1,6 +1,7 @@
 declare enum GLTFAnimationInterpolation {
-    LINEAR = 0,
-    STEP = 1,
-    CUBICSPLINE = 2
+    LINEAR = "LINEAR",
+    STEP = "STEP",
+    CUBICSPLINE = "CUBICSPLINE"
 }
+export declare const GLTFAnimationInterpolationValues: readonly string[];
 export default GLTFAnimationInterpolation;

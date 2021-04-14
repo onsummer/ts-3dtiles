@@ -1,15 +1,17 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { IValidate } from "src/interfaces"
+import { IGLTFAnimationChannel } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import GLTFAnimationChannelTarget from "./gltf-animation-channel-target"
 
-class GLTFAnimationChannel implements IValidate {
+class GLTFAnimationChannel extends GLTFPropertyBase {
   sampler: number
   target: GLTFAnimationChannelTarget
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     return this.target.validate()
   } 
@@ -28,6 +30,15 @@ class GLTFAnimationChannel implements IValidate {
     writeDefinedProperty(ac, 'extras', this.extras)
 
     return ac
+  }
+
+  static readFromJson(json: IGLTFAnimationChannel) {
+    const channel = new GLTFAnimationChannel()
+    channel.sampler = json.sampler
+    channel.target = GLTFAnimationChannelTarget.readFromJson(json.target)
+    channel.extras = json.extras
+    
+    return channel
   }
 }
 

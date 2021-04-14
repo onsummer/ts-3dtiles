@@ -7,4 +7,6 @@ enum GLTFFilter {
   LINEAR_MIPMAP_LINEAR = 9987
 }
 
+export const GLTFFilterValues = Object.freeze(Object.values(GLTFFilter) as Array<number>)
+
 export default GLTFFilter

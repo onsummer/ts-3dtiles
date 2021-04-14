@@ -6,5 +6,6 @@ declare enum GLTFComponentType {
     UNSIGNED_INT = 5125,
     FLOAT = 5126
 }
+export declare const GLTFComponentTypeValues: readonly number[];
 export declare const getComponentTypeByteSize: (t: GLTFComponentType) => number;
 export default GLTFComponentType;

@@ -1,13 +1,13 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
-declare class GLTFAccessorSparseValues implements IValidate, ISerializable {
+import { IGLTFAccessorSparseValues } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
+declare class GLTFAccessorSparseValues extends GLTFPropertyBase {
     bufferView: number;
     byteOffset?: number;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {
         bufferView: number;
     };
+    static readFromJson(json: IGLTFAccessorSparseValues): GLTFAccessorSparseValues;
 }
 export default GLTFAccessorSparseValues;

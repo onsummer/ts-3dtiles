@@ -6,4 +6,5 @@ declare enum GLTFFilter {
     NEAREST_MIPMAP_LINEAR = 9986,
     LINEAR_MIPMAP_LINEAR = 9987
 }
+export declare const GLTFFilterValues: readonly number[];
 export default GLTFFilter;

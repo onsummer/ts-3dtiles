@@ -4,4 +4,6 @@ enum GLTFWrapMode {
   MIRRORED_REPEAT = 33648,
 }
 
+export const GLTFWrapModeValues = Object.freeze(Object.values(GLTFWrapMode) as Array<number>)
+
 export default GLTFWrapMode

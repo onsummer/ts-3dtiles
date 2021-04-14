@@ -1,13 +1,13 @@
-import ISerializable from "src/interfaces/ISerializable";
-import IValidate from "../../../interfaces/IValidate";
-import GLTFExtensionBase from "../../ext/gltf-extension-base";
-declare class GLTFScene implements IValidate, ISerializable {
+import { IGLTFScene } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
+declare class GLTFScene extends GLTFPropertyBase {
     nodes: number[];
     name?: string;
-    extensions: Set<GLTFExtensionBase>;
+    constructor();
     validate(): boolean;
     json(): {
         nodes: number[];
     };
+    static readFromJson(json: IGLTFScene): GLTFScene;
 }
 export default GLTFScene;

@@ -1,15 +1,14 @@
-import ISerializable from "src/interfaces/ISerializable";
-import IValidate from "../../../interfaces/IValidate";
-import GLTFExtensionBase from "../../ext/gltf-extension-base";
+import { IGLTFImage } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import MIME from "./enum/mime";
-declare class GLTFImage implements IValidate, ISerializable {
+declare class GLTFImage extends GLTFPropertyBase {
     uri?: string;
     bufferView?: number;
     mimeType?: MIME;
     name?: string;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {};
+    static readFromJson(json: IGLTFImage): GLTFImage;
 }
 export default GLTFImage;

@@ -1,11 +1,10 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { IValidate } from "src/interfaces";
+import { IGLTFAnimationChannel } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFAnimationChannelTarget from "./gltf-animation-channel-target";
-declare class GLTFAnimationChannel implements IValidate {
+declare class GLTFAnimationChannel extends GLTFPropertyBase {
     sampler: number;
     target: GLTFAnimationChannelTarget;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {
         sampler: number;
@@ -13,5 +12,6 @@ declare class GLTFAnimationChannel implements IValidate {
             path: import("./enum/gltf-animation-channel-target-path").default;
         };
     };
+    static readFromJson(json: IGLTFAnimationChannel): GLTFAnimationChannel;
 }
 export default GLTFAnimationChannel;

@@ -1,15 +1,13 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
+import { IGLTFNormalTextureInfo } from "src/interfaces/IGLTFObj";
 import GLTFTextureInfo from "./gltf-texture-info";
-declare class GLTFNormalTextureInfo extends GLTFTextureInfo implements IValidate, ISerializable {
+declare class GLTFNormalTextureInfo extends GLTFTextureInfo {
     scale: number;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
     constructor(index: number, texCoord: number, scale: number);
     validate(): boolean;
     json(): {
         index: number;
         texCoord: number;
     };
+    static readFromJson(json: IGLTFNormalTextureInfo): GLTFNormalTextureInfo;
 }
 export default GLTFNormalTextureInfo;

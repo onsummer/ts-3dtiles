@@ -5,4 +5,6 @@ enum MIME {
   WEBP = "image/webp",
 }
 
+export const MIMEValues = Object.freeze(Object.values(MIME) as string[])
+
 export default MIME

@@ -1,15 +1,16 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFScene } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFScene implements IValidate, ISerializable {
+class GLTFScene extends GLTFPropertyBase {
   nodes: number[] = []
   name?: string
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     return this.nodes.length > 1
   }
@@ -21,6 +22,14 @@ class GLTFScene implements IValidate, ISerializable {
     writeDefinedProperty(s, 'name', this.name)
     writeExtensionsProperty(s, this.extensions)
     return s
+  }
+
+  static readFromJson(json: IGLTFScene) {
+    const scene = new GLTFScene()
+    scene.name = json.name
+    scene.nodes = json.nodes
+    scene.extras = json.extras
+    return scene
   }
 }
 

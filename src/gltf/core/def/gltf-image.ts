@@ -1,18 +1,19 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFImage } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPropertyBase from "./gltf-property-base"
 import MIME from "./enum/mime"
 
-class GLTFImage implements IValidate, ISerializable {
+class GLTFImage extends GLTFPropertyBase {
   uri?: string
   bufferView?: number
   mimeType?: MIME
   name?: string
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.uri !== undefined && this.bufferView !== undefined) {
       return false
@@ -35,6 +36,21 @@ class GLTFImage implements IValidate, ISerializable {
     writeExtensionsProperty(img, this.extensions)
     writeDefinedProperty(img, 'extras', this.extras)
 
+    return img
+  }
+
+  static readFromJson(json: IGLTFImage) {
+    const img = new GLTFImage()
+    img.name = json.name
+    img.bufferView = json.bufferView
+    if (json.mimeType !== undefined) {
+      if (json.mimeType in MIME) {
+        img.mimeType = json.mimeType as MIME
+      } else {
+        throw new Error('[GLTFImage.readFromJson()] 不支持的 mime 类型')
+      }
+    }
+    img.extras = json.extras
     return img
   }
 }

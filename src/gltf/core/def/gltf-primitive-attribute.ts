@@ -13,17 +13,20 @@ class GLTFPrimitiveAttribute implements IValidate, ISerializable {
   tangent?: number
   joints0?: number
   weights0?: number
+  /** 3rd */
+  _batchid?: number
 
   static readFromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute {
     const attr = new GLTFPrimitiveAttribute()
-    attr.position = json.position
-    attr.uv0 = json.uv0
-    attr.uv1 = json.uv1
-    attr.color0 = json.color0
-    attr.normal = json.normal
-    attr.tangent = json.tangent
-    attr.joints0 = json.joints0
-    attr.weights0 = json.weights0
+    attr.position = json.POSITION
+    attr.uv0 = json.TEXCOORD_0
+    attr.uv1 = json.TEXCOORD_1
+    attr.color0 = json.COLOR_0
+    attr.normal = json.NORMAL
+    attr.tangent = json.TANGENT
+    attr.joints0 = json.JOINTS_0
+    attr.weights0 = json.WEIGHTS_0
+    attr._batchid = json._BATCHID
     return attr
   }
 
@@ -42,6 +45,7 @@ class GLTFPrimitiveAttribute implements IValidate, ISerializable {
     writeDefinedProperty(attr, 'COLOR_0', this.color0)
     writeDefinedProperty(attr, 'JOINTS_0', this.joints0)
     writeDefinedProperty(attr, 'WEIGHTS_0', this.weights0)
+    writeDefinedProperty(attr, '_BATCHID', this._batchid)
 
     return attr
   }

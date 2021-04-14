@@ -1,15 +1,15 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
+import { IGLTFPbr } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFTextureInfo from "./gltf-texture-info";
-declare class GLTFPbr implements IValidate, ISerializable {
+declare class GLTFPbr extends GLTFPropertyBase {
     baseColorFactor?: number[];
     baseColorTexture?: GLTFTextureInfo;
     metallicFactor?: number;
     roughnessFactor?: number;
     metallicRoughnessTexture?: GLTFTextureInfo;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {};
+    static readFromJson(json: IGLTFPbr): GLTFPbr;
 }
 export default GLTFPbr;

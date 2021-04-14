@@ -1,15 +1,10 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
 import GLTFTextureInfo from "./gltf-texture-info"
 
 class GLTFOcclusionTextureInfo 
-extends GLTFTextureInfo
-implements IValidate, ISerializable {
+extends GLTFTextureInfo {
   strength: number
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
   constructor(index: number, texCoord: number, strength: number) {
     super(index, texCoord)

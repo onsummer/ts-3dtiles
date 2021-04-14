@@ -5,4 +5,6 @@ enum GLTFAnimationChannelTargetPath {
   WEIGHTS = "weights"
 }
 
+export const GLTFAnimationChannelTargetPathValues = Object.freeze(Object.values(GLTFAnimationChannelTargetPath) as Array<string>)
+
 export default GLTFAnimationChannelTargetPath

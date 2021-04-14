@@ -1,16 +1,19 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFAccessorSparseIndices } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import { GLTFComponentType } from "./enum"
+import { GLTFComponentTypeValues } from "./enum/gltf-component-type"
 
-class GLTFAccessorSparseIndices implements IValidate, ISerializable {
+class GLTFAccessorSparseIndices extends GLTFPropertyBase {
   bufferView: number
   byteOffset: number
   componentType: GLTFComponentType
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (
       this.componentType !== GLTFComponentType.UNSIGNED_BYTE &&
@@ -37,6 +40,19 @@ class GLTFAccessorSparseIndices implements IValidate, ISerializable {
     writeDefinedProperty(i, 'extras', this.extras)
 
     return i
+  }
+
+  static readFromJson(json: IGLTFAccessorSparseIndices) {
+    const accSparseIndices = new GLTFAccessorSparseIndices()
+
+    accSparseIndices.extras = json.extras
+    accSparseIndices.bufferView = json.bufferView
+    accSparseIndices.byteOffset = json.byteOffset
+    if (GLTFComponentTypeValues.includes(json.componentType)) {
+      accSparseIndices.componentType = json.componentType as GLTFComponentType
+    }
+
+    return accSparseIndices
   }
 }
 

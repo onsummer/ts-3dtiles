@@ -16,4 +16,6 @@ enum GLTFAlphaMode {
   BLEND = "BLEND"
 }
 
+export const GLTFAlphaModeValues = Object.freeze(Object.values(GLTFAlphaMode) as Array<string>)
+
 export default GLTFAlphaMode

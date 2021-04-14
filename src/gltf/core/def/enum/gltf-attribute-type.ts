@@ -8,6 +8,8 @@ enum GLTFAttributeType {
   MAT4 = "MAT4",
 }
 
+export const GLTFAttributeTypeValues = Object.freeze(Object.values(GLTFAttributeType) as Array<string>)
+
 export const getAttributeTypeElementCount = (t: GLTFAttributeType): number => {
   switch (t) {
     case GLTFAttributeType.VEC2:

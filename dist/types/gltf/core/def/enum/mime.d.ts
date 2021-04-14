@@ -4,4 +4,5 @@ declare enum MIME {
     PNG = "image/png",
     WEBP = "image/webp"
 }
+export declare const MIMEValues: readonly string[];
 export default MIME;

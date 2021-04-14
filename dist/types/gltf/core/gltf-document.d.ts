@@ -18,9 +18,36 @@ declare class GLTFDocument implements ISerializable {
     cameras?: GLTFCamera[];
     skins?: GLTFSkin[];
     extensions?: Set<GLTFExtensionBase>;
-    extras?: object;
+    extras?: any;
     extensionsUsed?: string[];
     extensionsRequired?: string[];
-    json(): void;
+    json(): {
+        asset: {
+            version: import("./def/enum/gltf-version").default;
+        };
+        buffers: {
+            byteLength: number;
+        }[];
+        bufferViews: {
+            buffer: number;
+            byteLength: number;
+        }[];
+        accessors: {
+            componentType: import("./def/enum/gltf-component-type").default;
+            type: import("./def/enum/gltf-attribute-type").default;
+            count: number;
+        }[];
+        scenes: {
+            nodes: number[];
+        }[];
+        nodes: {}[];
+        meshes: {
+            primitives: {
+                attribute: {
+                    POSITION: number;
+                };
+            }[];
+        }[];
+    };
 }
 export default GLTFDocument;

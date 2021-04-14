@@ -1,3 +1,7 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function writeDefinedProperty(obj, name, data) {
     if (data !== undefined)
         Object.defineProperty(obj, name, {
@@ -2800,5 +2804,75 @@ var TileRefine;
 })(TileRefine || (TileRefine = {}));
 var TileRefine$1 = TileRefine;
 
-export { Asset, B3dm, B3dmFeatureTable, B3dmHeader, BatchTable, Cmpt, ExtBatchtableHierarchy, ExtContentGLTF, ExtDraco, ExtImplicitTiling, ExtLayers, ExtMetadata, ExtMultipleContent, ExtPbrSpecularGlossiness, ExtPntsDraco, FeatureTable, GLTFAccessor, GLTFAccessorSparse, GLTFAccessorSparseIndices, GLTFAccessorSparseValues, GLTFAlphaMode$1 as GLTFAlphaMode, GLTFAnimation, GLTFAnimationChannel, GLTFAnimationChannelTarget, GLTFAnimationSampler, GLTFAsset, GLTFAttributeType$1 as GLTFAttributeType, GLTFBuffer, GLTFBufferView, GLTFCamera, GLTFComponentType$1 as GLTFComponentType, GLTFDocument, GLTFExtensionBase, GLTFFilter$1 as GLTFFilter, GLTFImage, GLTFMaterial, GLTFMesh, GLTFNode, GLTFNormalTextureInfo, GLTFOcclusionTextureInfo, GLTFOrthographicCamera, GLTFPbr, GLTFPerspectiveCamera, GLTFPrimitive, GLTFPrimitiveAttribute, GLTFPrimitiveMode$1 as GLTFPrimitiveMode, GLTFSampler, GLTFScene, GLTFSkin, GLTFTexture, GLTFTextureInfo, GLTFVersion$1 as GLTFVersion, GLTFWrapMode$1 as GLTFWrapMode, I3dm, I3dmFeatureTable, I3dmHeader, MIME$1 as MIME, Pnts, PntsFeatureTable, PntsHeader, Property, Tile, TileBoundingVolume, TileContent, TileHeaderBase, TileRefine$1 as TileRefine, Tileset, TilesetExtBase, VctrFeatureTable, readGLB, readGLTF };
-//# sourceMappingURL=ts-3dtiles.esm.js.map
+exports.Asset = Asset;
+exports.B3dm = B3dm;
+exports.B3dmFeatureTable = B3dmFeatureTable;
+exports.B3dmHeader = B3dmHeader;
+exports.BatchTable = BatchTable;
+exports.Cmpt = Cmpt;
+exports.ExtBatchtableHierarchy = ExtBatchtableHierarchy;
+exports.ExtContentGLTF = ExtContentGLTF;
+exports.ExtDraco = ExtDraco;
+exports.ExtImplicitTiling = ExtImplicitTiling;
+exports.ExtLayers = ExtLayers;
+exports.ExtMetadata = ExtMetadata;
+exports.ExtMultipleContent = ExtMultipleContent;
+exports.ExtPbrSpecularGlossiness = ExtPbrSpecularGlossiness;
+exports.ExtPntsDraco = ExtPntsDraco;
+exports.FeatureTable = FeatureTable;
+exports.GLTFAccessor = GLTFAccessor;
+exports.GLTFAccessorSparse = GLTFAccessorSparse;
+exports.GLTFAccessorSparseIndices = GLTFAccessorSparseIndices;
+exports.GLTFAccessorSparseValues = GLTFAccessorSparseValues;
+exports.GLTFAlphaMode = GLTFAlphaMode$1;
+exports.GLTFAnimation = GLTFAnimation;
+exports.GLTFAnimationChannel = GLTFAnimationChannel;
+exports.GLTFAnimationChannelTarget = GLTFAnimationChannelTarget;
+exports.GLTFAnimationSampler = GLTFAnimationSampler;
+exports.GLTFAsset = GLTFAsset;
+exports.GLTFAttributeType = GLTFAttributeType$1;
+exports.GLTFBuffer = GLTFBuffer;
+exports.GLTFBufferView = GLTFBufferView;
+exports.GLTFCamera = GLTFCamera;
+exports.GLTFComponentType = GLTFComponentType$1;
+exports.GLTFDocument = GLTFDocument;
+exports.GLTFExtensionBase = GLTFExtensionBase;
+exports.GLTFFilter = GLTFFilter$1;
+exports.GLTFImage = GLTFImage;
+exports.GLTFMaterial = GLTFMaterial;
+exports.GLTFMesh = GLTFMesh;
+exports.GLTFNode = GLTFNode;
+exports.GLTFNormalTextureInfo = GLTFNormalTextureInfo;
+exports.GLTFOcclusionTextureInfo = GLTFOcclusionTextureInfo;
+exports.GLTFOrthographicCamera = GLTFOrthographicCamera;
+exports.GLTFPbr = GLTFPbr;
+exports.GLTFPerspectiveCamera = GLTFPerspectiveCamera;
+exports.GLTFPrimitive = GLTFPrimitive;
+exports.GLTFPrimitiveAttribute = GLTFPrimitiveAttribute;
+exports.GLTFPrimitiveMode = GLTFPrimitiveMode$1;
+exports.GLTFSampler = GLTFSampler;
+exports.GLTFScene = GLTFScene;
+exports.GLTFSkin = GLTFSkin;
+exports.GLTFTexture = GLTFTexture;
+exports.GLTFTextureInfo = GLTFTextureInfo;
+exports.GLTFVersion = GLTFVersion$1;
+exports.GLTFWrapMode = GLTFWrapMode$1;
+exports.I3dm = I3dm;
+exports.I3dmFeatureTable = I3dmFeatureTable;
+exports.I3dmHeader = I3dmHeader;
+exports.MIME = MIME$1;
+exports.Pnts = Pnts;
+exports.PntsFeatureTable = PntsFeatureTable;
+exports.PntsHeader = PntsHeader;
+exports.Property = Property;
+exports.Tile = Tile;
+exports.TileBoundingVolume = TileBoundingVolume;
+exports.TileContent = TileContent;
+exports.TileHeaderBase = TileHeaderBase;
+exports.TileRefine = TileRefine$1;
+exports.Tileset = Tileset;
+exports.TilesetExtBase = TilesetExtBase;
+exports.VctrFeatureTable = VctrFeatureTable;
+exports.readGLB = readGLB;
+exports.readGLTF = readGLTF;
+//# sourceMappingURL=index.js.map

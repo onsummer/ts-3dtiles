@@ -51,10 +51,27 @@ export interface IGLTFAccessor extends IGLTFExtensionProp {
   type: string
   max?: number[]
   min?: number[]
-  sparse?: any
+  sparse?: IGLTFAccessorSparse
   name?: string
   normalized?: boolean
   bufferView?: number
+  byteOffset?: number
+}
+
+export interface IGLTFAccessorSparse extends IGLTFExtensionProp {
+  count: number
+  indices: IGLTFAccessorSparseIndices
+  values: IGLTFAccessorSparseValues
+}
+
+export interface IGLTFAccessorSparseIndices extends IGLTFExtensionProp {
+  bufferView: number
+  byteOffset: number
+  componentType: number
+}
+
+export interface IGLTFAccessorSparseValues extends IGLTFExtensionProp {
+  bufferView: number
   byteOffset?: number
 }
 
@@ -83,21 +100,23 @@ export interface IGLTFMesh extends IGLTFExtensionProp {
 }
 
 export interface IGLTFPrimitive extends IGLTFExtensionProp {
-  attribute: IGLTFPrimitiveAttribute
+  attributes: IGLTFPrimitiveAttribute
   indices?: number
   material?: number
   mode: number
 }
 
 export interface IGLTFPrimitiveAttribute extends IGLTFExtensionProp {
-  position: number
-  uv0?: number
-  uv1?: number
-  color0?: number
-  normal?: number
-  tangent?: number
-  joints0?: number
-  weights0?: number
+  POSITION: number
+  TEXCOORD_0?: number
+  TEXCOORD_1?: number
+  COLOR_0?: number
+  NORMAL?: number
+  TANGENT?: number
+  JOINTS_0?: number
+  WEIGHTS_0?: number
+  /** 3rd */
+  _BATCHID?: number
 }
 
 export interface IGLTFTexture extends IGLTFExtensionProp {

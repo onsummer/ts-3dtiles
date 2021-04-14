@@ -15,4 +15,5 @@ declare enum GLTFAlphaMode {
      */
     BLEND = "BLEND"
 }
+export declare const GLTFAlphaModeValues: readonly string[];
 export default GLTFAlphaMode;

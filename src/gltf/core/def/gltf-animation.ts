@@ -1,17 +1,19 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFAnimation } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import GLTFAnimationChannel from "./gltf-animation-channel"
 import GLTFAnimationSampler from "./gltf-animation-sampler"
 
-class GLTFAnimation implements IValidate, ISerializable {
+class GLTFAnimation extends GLTFPropertyBase {
   channels: GLTFAnimationChannel[] = []
   samplers: GLTFAnimationSampler[] = []
   name?: string
-  extensions?: Set<GLTFExtensionBase> = new Set() 
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.channels!.length < 1 || this.samplers!.length < 1) {
       return false
@@ -31,6 +33,16 @@ class GLTFAnimation implements IValidate, ISerializable {
     writeDefinedProperty(ani, 'samplers', this.samplers.length !== 0 ? this.samplers.map(s => s.json()) : undefined)
     writeExtensionsProperty(ani, this.extensions)
     writeDefinedProperty(ani, 'extras', this.extras)
+
+    return ani
+  }
+
+  static readFromJson(json: IGLTFAnimation) {
+    const ani = new GLTFAnimation()
+    ani.name = json.name
+    ani.channels = json.channels.map(channel => GLTFAnimationChannel.readFromJson(channel))
+    ani.samplers = json.samplers.map(spl => GLTFAnimationSampler.readFromJson(spl))
+    ani.extras = json.extras
 
     return ani
   }

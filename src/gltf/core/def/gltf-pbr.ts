@@ -1,18 +1,20 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFPbr } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import GLTFTextureInfo from "./gltf-texture-info"
 
-class GLTFPbr implements IValidate, ISerializable {
+class GLTFPbr extends GLTFPropertyBase {
   baseColorFactor?: number[] = [1, 1, 1, 1]
   baseColorTexture?: GLTFTextureInfo
   metallicFactor?: number
   roughnessFactor?: number
   metallicRoughnessTexture?: GLTFTextureInfo
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.baseColorFactor!.length !== 4 || this.baseColorFactor!.every(v => v < 0 || v > 1)) {
       return false
@@ -36,13 +38,32 @@ class GLTFPbr implements IValidate, ISerializable {
 
     const pbr = {}
 
-    writeDefinedProperty(pbr, 'baseColorFactor', this.baseColorFactor)
+    if (this.baseColorFactor !== undefined && this.baseColorFactor.every(v => v !== 1.0)) {
+      writeDefinedProperty(pbr, 'baseColorFactor', this.baseColorFactor)
+    }
     writeDefinedProperty(pbr, 'baseColorTexture', this.baseColorTexture !== undefined ? this.baseColorTexture.json() : undefined)
     writeDefinedProperty(pbr, 'metallicFactor', this.metallicFactor)
     writeDefinedProperty(pbr, 'roughnessFactor', this.roughnessFactor)
     writeDefinedProperty(pbr, 'metallicRoughnessTexture', this.metallicRoughnessTexture !== undefined ? this.metallicRoughnessTexture.json() : undefined)
     writeExtensionsProperty(pbr, this.extensions)
     writeDefinedProperty(pbr, 'extras', this.extras)
+
+    return pbr
+  }
+
+  static readFromJson(json: IGLTFPbr) {
+    const pbr = new GLTFPbr()
+
+    pbr.extras = json.extras
+    pbr.metallicFactor = json.metallicFactor
+    pbr.roughnessFactor = json.roughnessFactor
+    pbr.baseColorFactor = json.baseColorFactor
+    if (json.baseColorTexture !== undefined) { 
+      pbr.baseColorTexture = GLTFTextureInfo.readFromJson(json.baseColorTexture)
+    }
+    if (json.metallicRoughnessTexture !== undefined) { 
+      pbr.metallicRoughnessTexture = GLTFTextureInfo.readFromJson(json.metallicRoughnessTexture)
+    }
 
     return pbr
   }

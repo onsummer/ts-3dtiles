@@ -7,6 +7,8 @@ enum GLTFComponentType {
   FLOAT = 5126
 }
 
+export const GLTFComponentTypeValues = Object.freeze(Object.values(GLTFComponentType) as Array<number>)
+
 export const getComponentTypeByteSize = (t: GLTFComponentType): number => {
   switch (t) {
     case GLTFComponentType.BYTE:

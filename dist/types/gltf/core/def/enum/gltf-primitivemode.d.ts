@@ -7,4 +7,5 @@ declare enum GLTFPrimitiveMode {
     TRIANGLE_STRIP = 5,
     TRIANGLE_FAN = 6
 }
+export declare const GLTFPrimitiveModeValues: readonly number[];
 export default GLTFPrimitiveMode;

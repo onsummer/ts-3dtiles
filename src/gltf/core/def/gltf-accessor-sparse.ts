@@ -1,13 +1,17 @@
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFAccessorSparse } from "src/interfaces/IGLTFObj"
+import GLTFPropertyBase from "./gltf-property-base"
 import GLTFAccessorSparseIndices from "./gltf-accessor-sparse-indices"
 import GLTFAccessorSparseValues from "./gltf-accessor-sparse-values"
 
-
-class GLTFAccessorSparse implements IValidate, ISerializable {
+class GLTFAccessorSparse extends GLTFPropertyBase {
   count: number
   indices: GLTFAccessorSparseIndices
   values: GLTFAccessorSparseValues
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     return this.count > 0 && this.values.validate() && this.indices.validate()
   }
@@ -24,6 +28,15 @@ class GLTFAccessorSparse implements IValidate, ISerializable {
     }
 
     return spr
+  }
+
+  static readFromJson(json: IGLTFAccessorSparse) {
+    const sparse = new GLTFAccessorSparse()
+    sparse.indices = GLTFAccessorSparseIndices.readFromJson(json.indices)
+    sparse.values = GLTFAccessorSparseValues.readFromJson(json.values)
+    sparse.extras = json.extras
+
+    return sparse
   }
 }
 

@@ -1,29 +1,18 @@
-import { GLTFAccessor, GLTFAlphaMode, GLTFAnimation, GLTFAsset, GLTFAttributeType, GLTFBuffer, GLTFBufferView, GLTFCamera, GLTFComponentType, GLTFDocument, GLTFFilter, GLTFImage, GLTFMaterial, GLTFMesh, GLTFNode, GLTFOrthographicCamera, GLTFPerspectiveCamera, GLTFPrimitive, GLTFPrimitiveAttribute, GLTFPrimitiveMode, GLTFSampler, GLTFScene, GLTFSkin, GLTFTexture, GLTFVersion, GLTFWrapMode, MIME } from "src/gltf/core"
-import { IGLTFObj } from "src/interfaces"
-import { IGLTFAccessor, IGLTFAnimation, IGLTFBuffer, IGLTFBufferView, IGLTFCamera, IGLTFImage, IGLTFMaterial, IGLTFMesh, IGLTFNode, IGLTFPrimitive, IGLTFSampler, IGLTFScene, IGLTFSkin, IGLTFTexture } from "src/interfaces/IGLTFObj"
+import { GLTFAccessor, GLTFAnimation, GLTFAsset, GLTFBuffer, GLTFBufferView, GLTFCamera, GLTFDocument, GLTFImage, GLTFMaterial, GLTFMesh, GLTFNode, GLTFSampler, GLTFScene, GLTFSkin, GLTFTexture } from "src/gltf/core"
+import { IGLTFObj, IGLTFAccessor, IGLTFAnimation, IGLTFBuffer, IGLTFBufferView, IGLTFCamera, IGLTFImage, IGLTFMaterial, IGLTFMesh, IGLTFNode, IGLTFSampler, IGLTFScene, IGLTFSkin, IGLTFTexture } from "src/interfaces"
 import GLTFReadType from "src/interfaces/GLTFReadType"
 import GLTFResources from "src/interfaces/GLTFResources"
-import GLTFCameraType from "src/gltf/core/def/enum/gltf-cameratype"
 
 function readBuffers(gltfBuffers: GLTFBuffer[], json: IGLTFBuffer[]) {
   for (const bfjson of json) {
-    const bf = new GLTFBuffer()
-    bf.uri = bfjson.uri
-    bf.byteLength = bfjson.byteLength
-    bf.extras = bfjson.extras
-    // extensions 单独处理
+    const bf = GLTFBuffer.readFromJson(bfjson)
     gltfBuffers.push(bf)
   }
 }
 
 function readBufferViews(gltfBufferViews: GLTFBufferView[], json: IGLTFBufferView[]) {
   for (const bvjson of json) {
-    const bv = new GLTFBufferView()
-    bv.buffer = bvjson.buffer
-    bv.byteLength = bvjson.byteLength
-    bv.byteOffset = bvjson.byteOffset
-    bv.extras = bvjson.extras
-    bv.target = bvjson.target
+    const bv = GLTFBufferView.readFromJson(bvjson)
     // extensions 单独处理
     gltfBufferViews.push(bv)
   }
@@ -31,26 +20,7 @@ function readBufferViews(gltfBufferViews: GLTFBufferView[], json: IGLTFBufferVie
 
 function readAccessors(gltfAccessors: GLTFAccessor[], json: IGLTFAccessor[]) {
   for (const accjson of json) {
-    const acc = new GLTFAccessor()
-    if (accjson.componentType in GLTFComponentType) {
-      acc.componentType = accjson.componentType as GLTFComponentType
-    } else {
-      throw new Error('[readGLTF() readAccessors()] 属性 componentType 非法')
-    }
-    acc.count = accjson.count
-    if (accjson.type in GLTFAttributeType) {
-      acc.type = accjson['type'] as GLTFAttributeType
-    } else {
-      throw new Error('[readGLTF() readAccessors()] 属性 type 非法')
-    }
-    acc.max = accjson.max
-    acc.min = accjson.min
-    acc.sparse = accjson.sparse
-    acc.normalized = accjson.normalized
-    acc.bufferView = accjson.bufferView
-    acc.byteOffset = accjson.byteOffset
-    acc.name = accjson.name
-    acc.extras = accjson.extras
+    const acc = GLTFAccessor.readFromJson(accjson)
     // extensions 单独处理
     gltfAccessors.push(acc)
   }
@@ -58,170 +28,96 @@ function readAccessors(gltfAccessors: GLTFAccessor[], json: IGLTFAccessor[]) {
 
 function readScenes(gltfScenes: GLTFScene[], json: IGLTFScene[]) {
   for (const scenejson of json) {
-    const scene = new GLTFScene()
-    scene.name = scenejson.name
-    scene.nodes = scenejson.nodes
-    scene.extras = scenejson.extras
+    const scene = GLTFScene.readFromJson(scenejson)
     gltfScenes.push(scene)
   }
 }
 
 function readNodes(gltfNodes: GLTFNode[], json: IGLTFNode[]) {
   for (const nodejson of json) {
-    const node = new GLTFNode()
-    node.name = nodejson.name
-    node.mesh = nodejson.mesh
-    node.matrix = nodejson.matrix
-    node.rotation = nodejson.rotation
-    node.scale = nodejson.scale
-    node.skin = nodejson.skin
-    node.children = nodejson.children
-    node.weights = nodejson.weights
-    node.translation = nodejson.translation
-    node.camera = nodejson.camera
-    node.extras = nodejson.extras
+    const node = GLTFNode.readFromJson(nodejson)
     gltfNodes.push(node)
   }
 }
 
 function readMeshs(gltfMeshs: GLTFMesh[], json: IGLTFMesh[]) {
   for (const meshjson of json) {
-    const mesh = new GLTFMesh()
-    mesh.name = meshjson.name
-    readPrimitives(mesh.primitives, meshjson.primitives)
-    mesh.weights = meshjson.weights
-    mesh.extras = meshjson.extras
+    const mesh = GLTFMesh.readFromJson(meshjson)
     gltfMeshs.push(mesh)
-  }
-}
-
-function readPrimitives(primitives: GLTFPrimitive[], json: IGLTFPrimitive[]) {
-  for (const prmtjson of json) {
-    const prmt = new GLTFPrimitive()
-    prmt.indices = prmtjson.indices
-    prmt.material = prmtjson.material
-    if (prmtjson.mode !== undefined && prmtjson.mode !== 4) {
-      if (prmtjson.mode in GLTFPrimitiveMode) {
-        prmt.mode = prmtjson.mode as GLTFPrimitiveMode
-      } else {
-        throw new Error(`[readGLTF() readMeshs() readPrimitives()] mode：${prmtjson.mode} 不合法，请检查`)
-      }
-    }
-    prmt.attribute = GLTFPrimitiveAttribute.readFromJson(prmtjson.attribute)
-    primitives.push(prmt)
   }
 }
 
 function readTextures(gltfTextures: GLTFTexture[], json: IGLTFTexture[]) {
   for (const txjson of json) {
-    const tx = new GLTFTexture()
-    tx.name = txjson.name
-    tx.source = txjson.source
-    tx.sampler = txjson.sampler
-    tx.extras = txjson.extras
+    const tx = GLTFTexture.readFromJson(txjson)
     gltfTextures.push(tx)
   }
 }
 
 function readImages(gltfImages: GLTFImage[], json: IGLTFImage[]) {
   for (const imgjson of json) {
-    const img = new GLTFImage()
-    img.name = imgjson.name
-    img.bufferView = imgjson.bufferView
-    if (imgjson.mimeType !== undefined) {
-      if (imgjson.mimeType in MIME) {
-        img.mimeType = imgjson.mimeType as MIME
-      } else {
-        throw new Error('[readGLTF() readImages()] 不支持的 mime 类型')
-      }
-    }
-    img.extras = imgjson.extras
+    const img = GLTFImage.readFromJson(imgjson)
     gltfImages.push(img)
   }
 }
 
 function readMaterials(gltfMaterials: GLTFMaterial[], json: IGLTFMaterial[]) {
   for (const mtrljson of json) {
-    const mtrl = new GLTFMaterial()
-    mtrl.name = mtrljson.name
-    // mtrl.pbrMetallicRoughness = mtrljson.pbrMetallicRoughness
-    // mtrl.normalTexture = mtrljson.normalTexture
-    // mtrl.alphaMode = mtrljson.alphaMode as GLTFAlphaMode
-    mtrl.doubleSided = mtrljson.doubleSided
-    mtrl.emissiveFactor = mtrljson.emissiveFactor
-    mtrl.alphaCutoff = mtrljson.alphaCutoff
-    mtrl.extras = mtrljson.extras
+    const mtrl = GLTFMaterial.readFromJson(mtrljson)
     gltfMaterials.push(mtrl)
   }
 }
 
 function readSamplers(gltfSamplers: GLTFSampler[], json: IGLTFSampler[]) {
   for (const spljson of json) {
-    const spl = new GLTFSampler()
-    spl.name = spljson.name
-    // spl.magFilter = spljson.magFilter as GLTFFilter
-    // spl.minFilter = spljson.minFilter as GLTFFilter
-    // spl.wrapS = spljson.wrapS as GLTFWrapMode
-    // spl.wrapT = spljson.wrapT as GLTFWrapMode
-    spl.extras = spljson.extras
+    const spl = GLTFSampler.readFromJson(spljson)
     gltfSamplers.push(spl)
   }
 }
 
 function readAnimations(gltfAnimations: GLTFAnimation[], json: IGLTFAnimation[]) {
   for (const anijson of json) {
-    const ani = new GLTFAnimation()
-    ani.name = anijson.name
-    // ani.channels = anijson.channels
-    // ani.samplers = anijson.samplers
-    ani.extras = anijson.extras
+    const ani = GLTFAnimation.readFromJson(anijson)
     gltfAnimations.push(ani)
   }
 }
 
 function readSkins(gltfSkins: GLTFSkin[], json: IGLTFSkin[]) {
   for (const skinjson of json) {
-    const skin = new GLTFSkin()
-    skin.joints = skinjson.joints
-    skin.name = skinjson.name
-    skin.inverseBindMatrices = skinjson.inverseBindMatrices
-    skin.skeleton = skinjson.skeleton
-    skin.extras = skin.extras
+    const skin = GLTFSkin.readFromJson(skinjson)
     gltfSkins.push(skin)
   }
 }
 
 function readCameras(gltfCameras: GLTFCamera[], json: IGLTFCamera[]) {
   for (const camerajson of json) {
-    const camera = new GLTFCamera()
-    camera.name = camerajson.name
-    camera.type = camerajson.type as GLTFCameraType
-    let hasCamera = false
-    if (camerajson.perspective !== undefined) {
-      camera.perspective = new GLTFPerspectiveCamera()
-      camera.perspective.yfov = camerajson.perspective.yfov
-      camera.perspective.znear = camerajson.perspective.znear
-      camera.perspective.aspectRatio = camerajson.perspective.aspectRatio
-      camera.perspective.zfar = camerajson.perspective.zfar
-      hasCamera = true
-    }
-    if (camerajson.orthographic !== undefined) {
-      if (hasCamera) {
-        throw new Error('[readGLTF() readCameras()] 已经有一个 perspective 相机了')
-      }
-      camera.orthographic = new GLTFOrthographicCamera()
-      camera.orthographic.xmag = camerajson.orthographic.xmag
-      camera.orthographic.ymag = camerajson.orthographic.ymag
-      camera.orthographic.zfar = camerajson.orthographic.zfar
-      camera.orthographic.znear = camerajson.orthographic.znear
-    }
-    camera.extras = camerajson.extras
+    const camera = GLTFCamera.readFromJson(camerajson)
     gltfCameras.push(camera)
   }
 }
 
 // function bind(doc: GLTFDocument) {
-// 绑定 doc 到各个元素上
+//   doc.asset.doc = doc
+//   doc.buffers.forEach(bf => bf.doc = doc)
+//   doc.bufferViews.forEach(bv => bv.doc = doc)
+//   doc.accessors.forEach(acc => acc.doc = doc)
+//   doc.scenes.forEach(scene => scene.doc = doc)
+//   doc.nodes.forEach(nd => nd.doc = doc)
+//   doc.meshes.forEach(mesh => mesh.doc = doc)
+//   if (doc.materials)
+//     doc.materials.forEach(mtl => mtl.doc = doc)
+//   if (doc.textures)
+//     doc.textures.forEach(tx => tx.doc = doc)
+//   if (doc.images)
+//     doc.images.forEach(img => img.doc = doc)
+//   if (doc.samplers)
+//     doc.samplers.forEach(spl => spl.doc = doc)
+//   if (doc.animations)
+//     doc.animations.forEach(ani => ani.doc = doc)
+//   if (doc.cameras)
+//     doc.cameras.forEach(camera => camera.doc = doc)
+//   if (doc.skins)
+//     doc.skins.forEach(skin => skin.doc = doc)
 // }
 
 const readGLTF = (json: GLTFReadType, ...resources: GLTFResources[]): GLTFDocument => {

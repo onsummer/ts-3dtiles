@@ -1,14 +1,15 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFMaterial } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import { GLTFAlphaMode } from "./enum"
+import { GLTFAlphaModeValues } from "./enum/gltf-alphamode"
 import GLTFNormalTextureInfo from "./gltf-normal-texture-info"
 import GLTFOcclusionTextureInfo from "./gltf-occlusion-texture-info"
 import GLTFPbr from "./gltf-pbr"
 import GLTFTextureInfo from "./gltf-texture-info"
 
-class GLTFMaterial implements IValidate, ISerializable {
+class GLTFMaterial extends GLTFPropertyBase {
   name?: string
   pbrMetallicRoughness?: GLTFPbr
   normalTexture?: GLTFNormalTextureInfo
@@ -18,9 +19,11 @@ class GLTFMaterial implements IValidate, ISerializable {
   alphaMode?: GLTFAlphaMode = GLTFAlphaMode.OPAQUE
   alphaCutoff?: number = 0.5
   doubleSided?: boolean = false
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.pbrMetallicRoughness!.validate() === false) {
       return false
@@ -59,6 +62,28 @@ class GLTFMaterial implements IValidate, ISerializable {
     writeDefinedProperty(m, 'extras', this.extras)
     
     return m
+  }
+
+  static readFromJson(json: IGLTFMaterial) {
+    const mtl = new GLTFMaterial()
+    mtl.name = json.name
+    if (json.pbrMetallicRoughness !== undefined) {
+      mtl.pbrMetallicRoughness = GLTFPbr.readFromJson(json.pbrMetallicRoughness)
+    }
+    if (json.normalTexture !== undefined) {
+      mtl.normalTexture = GLTFNormalTextureInfo.readFromJson(json.normalTexture)
+    }
+    if (json.emissiveTexture !== undefined) {
+      mtl.emissiveTexture = GLTFTextureInfo.readFromJson(json.emissiveTexture)
+    }
+    if (json.alphaMode !== undefined && GLTFAlphaModeValues.includes(json.alphaMode)) {
+      mtl.alphaMode = json.alphaMode as GLTFAlphaMode
+    }
+    mtl.doubleSided = json.doubleSided
+    mtl.emissiveFactor = json.emissiveFactor
+    mtl.alphaCutoff = json.alphaCutoff
+    mtl.extras = json.extras
+    return mtl
   }
 }
 

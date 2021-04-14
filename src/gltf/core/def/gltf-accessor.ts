@@ -1,12 +1,13 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFAccessor } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 import { GLTFAttributeType, GLTFComponentType } from "./enum"
+import { GLTFAttributeTypeValues } from "./enum/gltf-attribute-type"
+import { GLTFComponentTypeValues } from "./enum/gltf-component-type"
 import GLTFAccessorSparse from "./gltf-accessor-sparse"
 
-
-class GLTFAccessor implements IValidate, ISerializable {
+class GLTFAccessor extends GLTFPropertyBase {
   componentType: GLTFComponentType
   count: number
   type: GLTFAttributeType
@@ -18,9 +19,10 @@ class GLTFAccessor implements IValidate, ISerializable {
   bufferView?: number
   byteOffset?: number
 
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
-
+  constructor() {
+    super()
+  }
+  
   validate() {
     /** byteOffset 和 bufferView 必须同时存在 */
     if (this.byteOffset !== undefined && this.bufferView !== undefined) {
@@ -50,6 +52,32 @@ class GLTFAccessor implements IValidate, ISerializable {
     writeExtensionsProperty(acc, this.extensions)
     writeDefinedProperty(acc, 'extras', this.extras)
     
+    return acc
+  }
+
+  static readFromJson(json: IGLTFAccessor) {
+    const acc = new GLTFAccessor()
+    if (GLTFComponentTypeValues.includes(json.componentType)) {
+      acc.componentType = json.componentType as GLTFComponentType
+    } else {
+      throw new Error('[GLTFAccessor.readFromJson()] 属性 componentType 非法')
+    }
+    acc.count = json.count
+    if (GLTFAttributeTypeValues.includes(json.type)) {
+      acc.type = json['type'] as GLTFAttributeType
+    } else {
+      throw new Error('[readGLTF() readAccessors()] 属性 type 非法')
+    }
+    acc.max = json.max
+    acc.min = json.min
+    if (json.sparse !== undefined) {
+      acc.sparse = GLTFAccessorSparse.readFromJson(json.sparse)
+    }
+    acc.normalized = json.normalized
+    acc.bufferView = json.bufferView
+    acc.byteOffset = json.byteOffset
+    acc.name = json.name
+    acc.extras = json.extras
     return acc
   }
 }

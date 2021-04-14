@@ -1,17 +1,16 @@
-import ISerializable from 'src/interfaces/ISerializable';
-import IValidate from '../../../interfaces/IValidate';
-import GLTFExtensionBase from '../../ext/gltf-extension-base';
+import { IGLTFSampler } from 'src/interfaces/IGLTFObj';
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFFilter from './enum/gltf-filter';
 import GLTFWrapMode from './enum/gltf-wrapmode';
-declare class GLTFSampler implements IValidate, ISerializable {
+declare class GLTFSampler extends GLTFPropertyBase {
     magFilter?: GLTFFilter;
     minFilter?: GLTFFilter;
     wrapS?: GLTFWrapMode;
     wrapT?: GLTFWrapMode;
     name?: string;
-    extensions?: Set<GLTFExtensionBase>;
-    extras: any;
+    constructor();
     validate(): boolean;
     json(): {};
+    static readFromJson(json: IGLTFSampler): GLTFSampler;
 }
 export default GLTFSampler;

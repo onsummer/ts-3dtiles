@@ -1,14 +1,9 @@
-import { IGLTFPerspectiveCameraConstructionParam, IValidate } from "src/interfaces";
-import ISerializable from "src/interfaces/ISerializable";
+import { ISerializable, IValidate } from "src/interfaces";
 declare class GLTFPerspectiveCamera implements IValidate, ISerializable {
     yfov: number;
     znear: number;
     zfar?: number;
     aspectRatio?: number;
-    constructor(options: IGLTFPerspectiveCameraConstructionParam);
-    /**
-     * @todo
-     */
     validate(): boolean;
     json(): {
         yfov: number;

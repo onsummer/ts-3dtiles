@@ -1,10 +1,12 @@
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFTextureInfo } from "src/interfaces/IGLTFObj"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFTextureInfo implements IValidate, ISerializable {
+class GLTFTextureInfo extends GLTFPropertyBase {
   index: number
   texCoord: number
 
   constructor(index: number, texCoord: number) {
+    super()
     this.index = index
     this.texCoord = texCoord
   }
@@ -24,6 +26,13 @@ class GLTFTextureInfo implements IValidate, ISerializable {
     }
 
     return tinfo
+  }
+
+  static readFromJson(json: IGLTFTextureInfo) {
+    const textureInfo = new GLTFTextureInfo(json.index, json.texCoord)
+    textureInfo.extras = json.extras
+
+    return textureInfo
   }
 }
 

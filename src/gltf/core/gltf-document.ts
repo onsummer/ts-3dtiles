@@ -41,7 +41,7 @@ class GLTFDocument implements ISerializable {
   skins?: GLTFSkin[]
 
   extensions?: Set<GLTFExtensionBase>
-  extras?: object
+  extras?: any
   extensionsUsed?: string[]
   extensionsRequired?: string[]
 
@@ -69,6 +69,7 @@ class GLTFDocument implements ISerializable {
     writeDefinedProperty(gltfObj, 'extras', this.extras)
     writeDefinedProperty(gltfObj, 'extensionsUsed', this.extensionsUsed)
     writeDefinedProperty(gltfObj, 'extensionsRequired', this.extensionsRequired)
+    return gltfObj
   }
 }
 

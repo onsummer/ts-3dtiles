@@ -1,7 +1,7 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFNode } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 
 function validateTransforms(nd: GLTFNode) {
   let flag = true
@@ -9,27 +9,29 @@ function validateTransforms(nd: GLTFNode) {
     if (nd.rotation !== undefined || nd.scale !== undefined || nd.translation !== undefined) {
       flag = false
     }
+    if (nd.matrix.length !== 16) {
+      flag = false
+    }
   }
-  if (nd.matrix!.length !== 16) {
+  if (nd.scale && nd.scale.length !== 3) {
     flag = false
   }
-  if (nd.scale!.length !== 3) {
-    flag = false
-  }
-  if (nd.translation!.length !== 3) {
+  if (nd.translation && nd.translation.length !== 3) {
     flag = false
   }
 
-  if (nd.rotation!.length !== 4) {
-    flag = false
-  } else {
-    flag = nd.rotation!.every(r => r > 1 || r < -1)
+  if (nd.rotation) {
+    if (nd.rotation.length !== 4)
+      flag = false
+    else {
+      flag = nd.rotation.every(r => r > 1 || r < -1)
+    }
   }
 
   return flag
 }
 
-class GLTFNode implements IValidate, ISerializable {
+class GLTFNode extends GLTFPropertyBase {
   children: number[] = []
   mesh?: number
   rotation?: number[]
@@ -40,14 +42,16 @@ class GLTFNode implements IValidate, ISerializable {
   camera?: number
   matrix?: number[]
   scale?: number[]
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
+
+  constructor() {
+    super()
+  }
 
   validate() {
-    if (validateTransforms(this)) {
+    if (!validateTransforms(this)) {
       return false
     }
-    if (this.weights!.length < 1) {
+    if (this.weights && this.weights.length < 1) {
       return false
     } else if (this.weights !== undefined && this.mesh === undefined) {
       return false
@@ -56,7 +60,7 @@ class GLTFNode implements IValidate, ISerializable {
       return false
     }
 
-    if (this.children!.length < 1) {
+    if (this.children && this.children.length < 1) {
       return false
     }
     return true
@@ -78,14 +82,30 @@ class GLTFNode implements IValidate, ISerializable {
     writeDefinedProperty(n, 'skin', this.skin)
     writeDefinedProperty(n, 'camera', this.camera)
     writeDefinedProperty(n, 'name', this.name)
-    
-    if (this.children.length !== 0) {
+
+    if (this.children && this.children.length !== 0) {
       writeDefinedProperty(n, 'children', this.children)
     }
     writeExtensionsProperty(n, this.extensions)
     writeDefinedProperty(n, 'extras', this.extras)
 
     return n
+  }
+
+  static readFromJson(json: IGLTFNode) {
+    const node = new GLTFNode()
+    node.name = json.name
+    node.mesh = json.mesh
+    node.matrix = json.matrix
+    node.rotation = json.rotation
+    node.scale = json.scale
+    node.skin = json.skin
+    node.children = json.children
+    node.weights = json.weights
+    node.translation = json.translation
+    node.camera = json.camera
+    node.extras = json.extras
+    return node
   }
 }
 

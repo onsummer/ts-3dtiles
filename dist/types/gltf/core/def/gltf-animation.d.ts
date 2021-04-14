@@ -1,14 +1,14 @@
-import { GLTFExtensionBase } from "src/gltf/ext";
-import { ISerializable, IValidate } from "src/interfaces";
+import { IGLTFAnimation } from "src/interfaces/IGLTFObj";
+import GLTFPropertyBase from "./gltf-property-base";
 import GLTFAnimationChannel from "./gltf-animation-channel";
 import GLTFAnimationSampler from "./gltf-animation-sampler";
-declare class GLTFAnimation implements IValidate, ISerializable {
+declare class GLTFAnimation extends GLTFPropertyBase {
     channels: GLTFAnimationChannel[];
     samplers: GLTFAnimationSampler[];
     name?: string;
-    extensions?: Set<GLTFExtensionBase>;
-    extras?: any;
+    constructor();
     validate(): boolean;
     json(): {};
+    static readFromJson(json: IGLTFAnimation): GLTFAnimation;
 }
 export default GLTFAnimation;

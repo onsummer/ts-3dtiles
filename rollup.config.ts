@@ -12,7 +12,7 @@ const basePlugins = [
   resolve({ preferBuiltins: false, mainFields: ['browser'] }),
   commonjs(),
   sourceMaps(),
-  terser(),
+  // terser(),
 ]
 const devPlugins = []
 const prodPlugins = [terser()]

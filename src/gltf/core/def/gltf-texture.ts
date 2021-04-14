@@ -1,16 +1,17 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFTexture } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFTexture implements IValidate, ISerializable {
+class GLTFTexture extends GLTFPropertyBase {
   sampler?: number
   source?: number
   name?: string
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.sampler === undefined && this.source === undefined && this.name === undefined)
       return false
@@ -25,6 +26,15 @@ class GLTFTexture implements IValidate, ISerializable {
     writeExtensionsProperty(tx, this.extensions)
     writeDefinedProperty(tx, 'extras', this.extras)
 
+    return tx
+  }
+
+  static readFromJson(json: IGLTFTexture) {
+    const tx = new GLTFTexture()
+    tx.name = json.name
+    tx.source = json.source
+    tx.sampler = json.sampler
+    tx.extras = json.extras
     return tx
   }
 }

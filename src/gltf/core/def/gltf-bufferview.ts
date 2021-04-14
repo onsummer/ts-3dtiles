@@ -1,19 +1,20 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFBufferView } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import GLTFBufferViewTarget from "./enum/gltf-bufferview-target"
+import GLTFPropertyBase from "./gltf-property-base"
+import GLTFBufferViewTarget, { GLTFBufferViewTargetValues } from "./enum/gltf-bufferview-target"
 
-
-class GLTFBufferView implements IValidate, ISerializable {
+class GLTFBufferView extends GLTFPropertyBase {
   buffer: number = 0
   byteLength: number = 1
   byteOffset?: number = 0
   byteStride?: number = 4
   target?: GLTFBufferViewTarget
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     if (this.buffer < 0) {
       return false
@@ -50,8 +51,18 @@ class GLTFBufferView implements IValidate, ISerializable {
 
     return bv
   }
+
+  static readFromJson(json: IGLTFBufferView) {
+    const bv = new GLTFBufferView()
+    bv.buffer = json.buffer
+    bv.byteLength = json.byteLength
+    bv.byteOffset = json.byteOffset
+    bv.extras = json.extras
+    if (json.target !== undefined && GLTFBufferViewTargetValues.includes(json.target)) {
+      bv.target = json.target as GLTFBufferViewTarget
+    }
+    return bv
+  }
 }
-
-
 
 export default GLTFBufferView

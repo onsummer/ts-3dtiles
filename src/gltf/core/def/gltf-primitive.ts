@@ -1,21 +1,23 @@
-import ISerializable from "src/interfaces/ISerializable"
+import { IGLTFPrimitive } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
-import IValidate from "../../../interfaces/IValidate"
-import GLTFExtensionBase from "../../ext/gltf-extension-base"
-import GLTFPrimitiveMode from "./enum/gltf-primitivemode"
+import GLTFPropertyBase from "./gltf-property-base"
+import GLTFPrimitiveMode, { GLTFPrimitiveModeValues } from "./enum/gltf-primitivemode"
 import GLTFPrimitiveAttribute from "./gltf-primitive-attribute"
 
-class GLTFPrimitive implements IValidate, ISerializable {
-  attribute: GLTFPrimitiveAttribute = new GLTFPrimitiveAttribute()
+class GLTFPrimitive extends GLTFPropertyBase {
+
+  attributes: GLTFPrimitiveAttribute = new GLTFPrimitiveAttribute()
   indices?: number
   material?: number
   mode?: GLTFPrimitiveMode = GLTFPrimitiveMode.TRIANGLES
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
-    if (this.attribute.validate() === false) {
+    if (this.attributes.validate() === false) {
       return false
     }
     if (this.indices! < 0) {
@@ -29,7 +31,7 @@ class GLTFPrimitive implements IValidate, ISerializable {
 
   json() {
     const prmt = {
-      attribute: this.attribute.json()
+      attribute: this.attributes.json()
     }
     if (this.mode !== GLTFPrimitiveMode.TRIANGLES && this.mode !== undefined) {
       writeDefinedProperty(prmt, 'mode', this.mode)
@@ -39,6 +41,21 @@ class GLTFPrimitive implements IValidate, ISerializable {
     writeExtensionsProperty(prmt, this.extensions)
     writeDefinedProperty(prmt, 'extras', this.extras)
 
+    return prmt
+  }
+
+  static readFromJson(json: IGLTFPrimitive) {
+    const prmt = new GLTFPrimitive()
+    prmt.indices = json.indices
+    prmt.material = json.material
+    if (json.mode !== undefined && json.mode !== 4) {
+      if (GLTFPrimitiveModeValues.includes(json.mode)) {
+        prmt.mode = json.mode as GLTFPrimitiveMode
+      } else {
+        throw new Error(`[GLTFPrimitive.readFromJson()] mode：${json.mode} 不合法，请检查`)
+      }
+    }
+    prmt.attributes = GLTFPrimitiveAttribute.readFromJson(json.attributes)
     return prmt
   }
 }

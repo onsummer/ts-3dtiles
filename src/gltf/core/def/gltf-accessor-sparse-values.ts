@@ -1,14 +1,16 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFAccessorSparseValues } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFAccessorSparseValues implements IValidate, ISerializable {
+class GLTFAccessorSparseValues extends GLTFPropertyBase {
   bufferView: number
   byteOffset?: number
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     return !(this.byteOffset! < 0)
   }
@@ -27,6 +29,16 @@ class GLTFAccessorSparseValues implements IValidate, ISerializable {
     writeDefinedProperty(v, 'extras', this.extras)
 
     return v
+  }
+
+  static readFromJson(json: IGLTFAccessorSparseValues) {
+    const vals = new GLTFAccessorSparseValues()
+
+    vals.bufferView = json.bufferView
+    vals.byteOffset = json.byteOffset
+    vals.extras = json.extras
+
+    return vals
   }
 }
 

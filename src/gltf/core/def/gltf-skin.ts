@@ -1,16 +1,18 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { IValidate } from "src/interfaces"
+import { IGLTFSkin } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
+import GLTFPropertyBase from "./gltf-property-base"
 
-class GLTFSkin implements IValidate {
+class GLTFSkin extends GLTFPropertyBase {
   inverseBindMatrices?: number
   skeleton?: number
   name?: string
   joints: number[]
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
+  constructor() {
+    super()
+  }
+  
   validate() {
     return this.joints.length > 1
   }
@@ -30,6 +32,16 @@ class GLTFSkin implements IValidate {
     writeDefinedProperty(sk, 'extras', this.extras)
 
     return sk
+  }
+
+  static readFromJson(json: IGLTFSkin) {
+    const skin = new GLTFSkin()
+    skin.joints = json.joints
+    skin.name = json.name
+    skin.inverseBindMatrices = json.inverseBindMatrices
+    skin.skeleton = json.skeleton
+    skin.extras = json.extras
+    return skin
   }
 }
 

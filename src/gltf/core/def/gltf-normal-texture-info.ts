@@ -1,15 +1,11 @@
-import { GLTFExtensionBase } from "src/gltf/ext"
-import { ISerializable, IValidate } from "src/interfaces"
+import { IGLTFNormalTextureInfo } from "src/interfaces/IGLTFObj"
 import writeDefinedProperty from "src/utils/io/writeDefinedProperty"
 import writeExtensionsProperty from "src/utils/io/writeExtensionsProperty"
 import GLTFTextureInfo from "./gltf-texture-info"
 
 class GLTFNormalTextureInfo 
-extends GLTFTextureInfo 
-implements IValidate, ISerializable {
+extends GLTFTextureInfo  {
   scale: number
-  extensions?: Set<GLTFExtensionBase> = new Set()
-  extras?: any
 
   constructor(index: number, texCoord: number, scale: number) {
     super(index, texCoord)
@@ -31,6 +27,12 @@ implements IValidate, ISerializable {
     writeDefinedProperty(st, 'extras', this.extras)
 
     return st
+  }
+
+  static readFromJson(json: IGLTFNormalTextureInfo) {
+    const normalTextureInfo = new GLTFNormalTextureInfo(json.index, json.texCoord, json.scale)
+    normalTextureInfo.extras = json.extras
+    return normalTextureInfo
   }
 }
 
