@@ -49,8 +49,8 @@ export interface IGLTFAccessor extends IGLTFExtensionProp {
   componentType: number
   count: number
   type: string
-  max?: number[]
-  min?: number[]
+  max?: [number, number, number]
+  min?: [number, number, number]
   sparse?: IGLTFAccessorSparse
   name?: string
   normalized?: boolean
@@ -83,14 +83,19 @@ export interface IGLTFScene extends IGLTFExtensionProp {
 export interface IGLTFNode extends IGLTFExtensionProp {
   children: number[]
   mesh?: number
-  rotation?: number[]
-  translation?: number[]
+  rotation?: [number, number, number, number]
+  translation?: [number, number, number]
   weights?: number[]
   name?: string
   skin?: number
   camera?: number
-  matrix?: number[]
-  scale?: number[]
+  matrix?: [
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number
+  ]
+  scale?: [number, number, number]
 }
 
 export interface IGLTFMesh extends IGLTFExtensionProp {
@@ -138,14 +143,14 @@ export interface IGLTFMaterial extends IGLTFExtensionProp {
   normalTexture?: IGLTFNormalTextureInfo
   occlusionTexture?: IGLTFOcclusionTextureInfo
   emissiveTexture?: IGLTFTextureInfo
-  emissiveFactor?: number[]
+  emissiveFactor?: [number, number, number]
   alphaMode?: string
   alphaCutoff?: number
   doubleSided?: boolean
 }
 
 export interface IGLTFPbr extends IGLTFExtensionProp {
-  baseColorFactor?: number[]
+  baseColorFactor?: [number, number, number, number]
   baseColorTexture?: IGLTFTextureInfo
   metallicFactor?: number
   roughnessFactor?: number

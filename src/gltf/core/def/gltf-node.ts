@@ -9,23 +9,12 @@ function validateTransforms(nd: GLTFNode) {
     if (nd.rotation !== undefined || nd.scale !== undefined || nd.translation !== undefined) {
       flag = false
     }
-    if (nd.matrix.length !== 16) {
-      flag = false
-    }
-  }
-  if (nd.scale && nd.scale.length !== 3) {
-    flag = false
-  }
-  if (nd.translation && nd.translation.length !== 3) {
+  } else if (nd.rotation === undefined && nd.scale === undefined && nd.translation === undefined) {
     flag = false
   }
 
   if (nd.rotation) {
-    if (nd.rotation.length !== 4)
-      flag = false
-    else {
-      flag = nd.rotation.every(r => r > 1 || r < -1)
-    }
+    flag = nd.rotation.every(r => r > 1 || r < -1)
   }
 
   return flag
@@ -34,14 +23,19 @@ function validateTransforms(nd: GLTFNode) {
 class GLTFNode extends GLTFPropertyBase {
   children: number[] = []
   mesh?: number
-  rotation?: number[]
-  translation?: number[]
+  rotation?: [number, number, number, number]
+  translation?: [number, number, number]
   weights?: number[]
   name?: string
   skin?: number
   camera?: number
-  matrix?: number[]
-  scale?: number[]
+  matrix?: [
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number
+  ]
+  scale?: [number, number, number]
 
   constructor() {
     super()
@@ -60,8 +54,9 @@ class GLTFNode extends GLTFPropertyBase {
       return false
     }
 
-    if (this.children && this.children.length < 1) {
-      return false
+    if (this.children && this.children.length > 1) {
+      if (new Set(this.children).size !== this.children.length)
+        return false
     }
     return true
   }

@@ -12,7 +12,10 @@ class GLTFAccessorSparseValues extends GLTFPropertyBase {
   }
   
   validate() {
-    return !(this.byteOffset! < 0)
+    if (this.byteOffset && this.byteOffset < 0) {
+      return false
+    }
+    return true
   }
 
   json() {

@@ -11,8 +11,8 @@ class GLTFAccessor extends GLTFPropertyBase {
   componentType: GLTFComponentType
   count: number
   type: GLTFAttributeType
-  max?: number[]
-  min?: number[]
+  max?: [number, number, number]
+  min?: [number, number, number]
   sparse?: GLTFAccessorSparse
   name?: string
   normalized?: boolean
@@ -25,10 +25,15 @@ class GLTFAccessor extends GLTFPropertyBase {
   
   validate() {
     /** byteOffset 和 bufferView 必须同时存在 */
-    if (this.byteOffset !== undefined && this.bufferView !== undefined) {
-      return true
+    const offsetExist = this.byteOffset === undefined ? 1 : 0
+    const viewExist = this.bufferView === undefined ? 1 : 0
+    if (offsetExist + viewExist === 1) {
+      return false
     }
-    return false
+    if (this.byteOffset && this.byteOffset < 0) {
+      return false
+    }
+    return true
   }
 
   json() {

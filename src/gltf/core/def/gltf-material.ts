@@ -15,7 +15,7 @@ class GLTFMaterial extends GLTFPropertyBase {
   normalTexture?: GLTFNormalTextureInfo
   occlusionTexture?: GLTFOcclusionTextureInfo
   emissiveTexture?: GLTFTextureInfo
-  emissiveFactor?: number[] = [0, 0, 0]
+  emissiveFactor?: [number, number, number] = [0, 0, 0]
   alphaMode?: GLTFAlphaMode = GLTFAlphaMode.OPAQUE
   alphaCutoff?: number = 0.5
   doubleSided?: boolean = false
@@ -25,19 +25,19 @@ class GLTFMaterial extends GLTFPropertyBase {
   }
   
   validate() {
-    if (this.pbrMetallicRoughness!.validate() === false) {
+    if (this.pbrMetallicRoughness?.validate() === false) {
       return false
     }
-    if (this.normalTexture!.validate() === false) {
+    if (this.normalTexture?.validate() === false) {
       return false
     }
-    if (this.occlusionTexture!.validate() === false) {
+    if (this.occlusionTexture?.validate() === false) {
       return false
     }
     if (this.alphaMode === GLTFAlphaMode.MASK && this.alphaCutoff === undefined) {
       return false
     }
-    if (this.emissiveFactor!.length !== 3) {
+    if (this.emissiveFactor?.every(v => v < 0 || v > 1)) {
       return false
     }
     return true

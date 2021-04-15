@@ -22,10 +22,10 @@ class GLTFBufferView extends GLTFPropertyBase {
     if (this.byteLength < 1) {
       return false
     }
-    if (this.byteOffset! < 0) {
+    if (this.byteOffset && this.byteOffset < 0) {
       return false
     }
-    if (this.byteStride! % 4 !== 0 || this.byteStride! > 252 || this.byteStride! < 4) {
+    if (this.byteStride && (this.byteStride % 4 !== 0 || this.byteStride > 252 || this.byteStride < 4)) {
       return false
     }
     return true

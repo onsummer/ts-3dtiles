@@ -1,22 +1,12 @@
-import { GLTFDocument } from "../..";
-
-class GLTFWriteAction {
-  doc?: GLTFDocument
-  constructor() {
-    this.doc = undefined
-  }
-
-  setDocument(d: GLTFDocument) {
-    // if (d.validate()) {
-    //   this.doc = d
-    // }
-    this.doc = d
-  }
-
-  write(resultPath: string) {
-    console.log(resultPath)
-    return this.doc
-  }
+interface IGLTFWriteAction { 
+  type: string
+  submit() : boolean
 }
 
-export default GLTFWriteAction
+export default IGLTFWriteAction
+
+export { default as GLTFAddAction } from './gltf-add-action'
+export { default as GLTFDropAction } from './gltf-drop-action'
+export { default as GLTFUpdateAction } from './gltf-update-action'
+
+export * from './bag'

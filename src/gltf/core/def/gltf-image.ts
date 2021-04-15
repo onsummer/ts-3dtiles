@@ -22,7 +22,6 @@ class GLTFImage extends GLTFPropertyBase {
       if (this.mimeType === undefined) {
         return false
       }
-      return true
     }
     return true
   }

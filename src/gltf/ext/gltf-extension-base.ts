@@ -6,9 +6,8 @@ class GLTFExtensionBase implements IValidate, ISerializable {
     return this._name
   }
   
-  get isRequire() {
-    return false
-  }
+  required?: boolean
+  used?: boolean
 
   validate() {
     return true
