@@ -8,6 +8,6 @@ declare class GLTFScene extends GLTFPropertyBase {
     json(): {
         nodes: number[];
     };
-    static readFromJson(json: IGLTFScene): GLTFScene;
+    static fromJson(json: IGLTFScene): GLTFScene;
 }
 export default GLTFScene;

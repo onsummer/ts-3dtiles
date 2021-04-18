@@ -34,7 +34,7 @@ class GLTFSkin extends GLTFPropertyBase {
     return sk
   }
 
-  static readFromJson(json: IGLTFSkin) {
+  static fromJson(json: IGLTFSkin) {
     const skin = new GLTFSkin()
     skin.joints = json.joints
     skin.name = json.name

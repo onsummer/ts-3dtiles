@@ -13,6 +13,6 @@ declare class GLTFBufferView extends GLTFPropertyBase {
         buffer: number;
         byteLength: number;
     };
-    static readFromJson(json: IGLTFBufferView): GLTFBufferView;
+    static fromJson(json: IGLTFBufferView): GLTFBufferView;
 }
 export default GLTFBufferView;

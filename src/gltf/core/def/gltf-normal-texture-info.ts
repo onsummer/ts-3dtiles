@@ -29,7 +29,7 @@ extends GLTFTextureInfo  {
     return st
   }
 
-  static readFromJson(json: IGLTFNormalTextureInfo) {
+  static fromJson(json: IGLTFNormalTextureInfo) {
     const normalTextureInfo = new GLTFNormalTextureInfo(json.index, json.texCoord, json.scale)
     normalTextureInfo.extras = json.extras
     return normalTextureInfo

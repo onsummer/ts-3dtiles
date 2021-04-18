@@ -8,6 +8,6 @@ declare class GLTFSkin extends GLTFPropertyBase {
     constructor();
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFSkin): GLTFSkin;
+    static fromJson(json: IGLTFSkin): GLTFSkin;
 }
 export default GLTFSkin;

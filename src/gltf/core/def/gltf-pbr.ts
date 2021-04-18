@@ -53,7 +53,7 @@ class GLTFPbr extends GLTFPropertyBase {
     return pbr
   }
 
-  static readFromJson(json: IGLTFPbr) {
+  static fromJson(json: IGLTFPbr) {
     const pbr = new GLTFPbr()
 
     pbr.extras = json.extras
@@ -61,10 +61,10 @@ class GLTFPbr extends GLTFPropertyBase {
     pbr.roughnessFactor = json.roughnessFactor
     pbr.baseColorFactor = json.baseColorFactor
     if (json.baseColorTexture !== undefined) {
-      pbr.baseColorTexture = GLTFTextureInfo.readFromJson(json.baseColorTexture)
+      pbr.baseColorTexture = GLTFTextureInfo.fromJson(json.baseColorTexture)
     }
     if (json.metallicRoughnessTexture !== undefined) {
-      pbr.metallicRoughnessTexture = GLTFTextureInfo.readFromJson(json.metallicRoughnessTexture)
+      pbr.metallicRoughnessTexture = GLTFTextureInfo.fromJson(json.metallicRoughnessTexture)
     }
 
     return pbr

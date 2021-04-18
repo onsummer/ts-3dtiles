@@ -5,14 +5,14 @@ import GLTFResources from "src/interfaces/GLTFResources"
 
 function readBuffers(gltfBuffers: GLTFBuffer[], json: IGLTFBuffer[]) {
   for (const bfjson of json) {
-    const bf = GLTFBuffer.readFromJson(bfjson)
+    const bf = GLTFBuffer.fromJson(bfjson)
     gltfBuffers.push(bf)
   }
 }
 
 function readBufferViews(gltfBufferViews: GLTFBufferView[], json: IGLTFBufferView[]) {
   for (const bvjson of json) {
-    const bv = GLTFBufferView.readFromJson(bvjson)
+    const bv = GLTFBufferView.fromJson(bvjson)
     // extensions 单独处理
     gltfBufferViews.push(bv)
   }
@@ -20,7 +20,7 @@ function readBufferViews(gltfBufferViews: GLTFBufferView[], json: IGLTFBufferVie
 
 function readAccessors(gltfAccessors: GLTFAccessor[], json: IGLTFAccessor[]) {
   for (const accjson of json) {
-    const acc = GLTFAccessor.readFromJson(accjson)
+    const acc = GLTFAccessor.fromJson(accjson)
     // extensions 单独处理
     gltfAccessors.push(acc)
   }
@@ -28,97 +28,97 @@ function readAccessors(gltfAccessors: GLTFAccessor[], json: IGLTFAccessor[]) {
 
 function readScenes(gltfScenes: GLTFScene[], json: IGLTFScene[]) {
   for (const scenejson of json) {
-    const scene = GLTFScene.readFromJson(scenejson)
+    const scene = GLTFScene.fromJson(scenejson)
     gltfScenes.push(scene)
   }
 }
 
 function readNodes(gltfNodes: GLTFNode[], json: IGLTFNode[]) {
   for (const nodejson of json) {
-    const node = GLTFNode.readFromJson(nodejson)
+    const node = GLTFNode.fromJson(nodejson)
     gltfNodes.push(node)
   }
 }
 
 function readMeshs(gltfMeshs: GLTFMesh[], json: IGLTFMesh[]) {
   for (const meshjson of json) {
-    const mesh = GLTFMesh.readFromJson(meshjson)
+    const mesh = GLTFMesh.fromJson(meshjson)
     gltfMeshs.push(mesh)
   }
 }
 
 function readTextures(gltfTextures: GLTFTexture[], json: IGLTFTexture[]) {
   for (const txjson of json) {
-    const tx = GLTFTexture.readFromJson(txjson)
+    const tx = GLTFTexture.fromJson(txjson)
     gltfTextures.push(tx)
   }
 }
 
 function readImages(gltfImages: GLTFImage[], json: IGLTFImage[]) {
   for (const imgjson of json) {
-    const img = GLTFImage.readFromJson(imgjson)
+    const img = GLTFImage.fromJson(imgjson)
     gltfImages.push(img)
   }
 }
 
 function readMaterials(gltfMaterials: GLTFMaterial[], json: IGLTFMaterial[]) {
   for (const mtrljson of json) {
-    const mtrl = GLTFMaterial.readFromJson(mtrljson)
+    const mtrl = GLTFMaterial.fromJson(mtrljson)
     gltfMaterials.push(mtrl)
   }
 }
 
 function readSamplers(gltfSamplers: GLTFSampler[], json: IGLTFSampler[]) {
   for (const spljson of json) {
-    const spl = GLTFSampler.readFromJson(spljson)
+    const spl = GLTFSampler.fromJson(spljson)
     gltfSamplers.push(spl)
   }
 }
 
 function readAnimations(gltfAnimations: GLTFAnimation[], json: IGLTFAnimation[]) {
   for (const anijson of json) {
-    const ani = GLTFAnimation.readFromJson(anijson)
+    const ani = GLTFAnimation.fromJson(anijson)
     gltfAnimations.push(ani)
   }
 }
 
 function readSkins(gltfSkins: GLTFSkin[], json: IGLTFSkin[]) {
   for (const skinjson of json) {
-    const skin = GLTFSkin.readFromJson(skinjson)
+    const skin = GLTFSkin.fromJson(skinjson)
     gltfSkins.push(skin)
   }
 }
 
 function readCameras(gltfCameras: GLTFCamera[], json: IGLTFCamera[]) {
   for (const camerajson of json) {
-    const camera = GLTFCamera.readFromJson(camerajson)
+    const camera = GLTFCamera.fromJson(camerajson)
     gltfCameras.push(camera)
   }
 }
 
-// function bind(doc: GLTFDocument) {
-//   doc.asset.doc = doc
-//   doc.buffers.forEach(bf => bf.doc = doc)
-//   doc.bufferViews.forEach(bv => bv.doc = doc)
-//   doc.accessors.forEach(acc => acc.doc = doc)
-//   doc.scenes.forEach(scene => scene.doc = doc)
-//   doc.nodes.forEach(nd => nd.doc = doc)
-//   doc.meshes.forEach(mesh => mesh.doc = doc)
-//   if (doc.materials)
-//     doc.materials.forEach(mtl => mtl.doc = doc)
-//   if (doc.textures)
-//     doc.textures.forEach(tx => tx.doc = doc)
-//   if (doc.images)
-//     doc.images.forEach(img => img.doc = doc)
-//   if (doc.samplers)
-//     doc.samplers.forEach(spl => spl.doc = doc)
-//   if (doc.animations)
-//     doc.animations.forEach(ani => ani.doc = doc)
-//   if (doc.cameras)
-//     doc.cameras.forEach(camera => camera.doc = doc)
-//   if (doc.skins)
-//     doc.skins.forEach(skin => skin.doc = doc)
-// }
+function bind(doc: GLTFDocument) {
+  doc.asset.doc = doc
+  doc.buffers.forEach(bf => bf.doc = doc)
+  doc.bufferViews.forEach(bv => bv.doc = doc)
+  doc.accessors.forEach(acc => acc.doc = doc)
+  doc.scenes.forEach(scene => scene.doc = doc)
+  doc.nodes.forEach(nd => nd.doc = doc)
+  doc.meshes.forEach(mesh => mesh.doc = doc)
+  if (doc.materials)
+    doc.materials.forEach(mtl => mtl.doc = doc)
+  if (doc.textures)
+    doc.textures.forEach(tx => tx.doc = doc)
+  if (doc.images)
+    doc.images.forEach(img => img.doc = doc)
+  if (doc.samplers)
+    doc.samplers.forEach(spl => spl.doc = doc)
+  if (doc.animations)
+    doc.animations.forEach(ani => ani.doc = doc)
+  if (doc.cameras)
+    doc.cameras.forEach(camera => camera.doc = doc)
+  if (doc.skins)
+    doc.skins.forEach(skin => skin.doc = doc)
+}
 
 const readGLTF = (json: GLTFReadType, ...resources: GLTFResources[]): GLTFDocument => {
   const doc = new GLTFDocument()
@@ -161,7 +161,7 @@ const readGLTF = (json: GLTFReadType, ...resources: GLTFResources[]): GLTFDocume
     readCameras(doc.cameras === undefined ? new Array<GLTFCamera>() : doc.cameras, obj['cameras'])
   }
 
-  // bind(doc)
+  bind(doc)
   return doc
 }
 

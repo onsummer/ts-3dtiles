@@ -1,4 +1,4 @@
-import IGLTFWriteAction from ".";
+import { IGLTFWriteAction } from "src/interfaces"
 
 class GLTFDropAction implements IGLTFWriteAction {
   readonly type = "drop"

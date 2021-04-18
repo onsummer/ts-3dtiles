@@ -6,8 +6,8 @@ declare class GLTFAccessor extends GLTFPropertyBase {
     componentType: GLTFComponentType;
     count: number;
     type: GLTFAttributeType;
-    max?: number[];
-    min?: number[];
+    max?: [number, number, number];
+    min?: [number, number, number];
     sparse?: GLTFAccessorSparse;
     name?: string;
     normalized?: boolean;
@@ -20,6 +20,6 @@ declare class GLTFAccessor extends GLTFPropertyBase {
         type: GLTFAttributeType;
         count: number;
     };
-    static readFromJson(json: IGLTFAccessor): GLTFAccessor;
+    static fromJson(json: IGLTFAccessor): GLTFAccessor;
 }
 export default GLTFAccessor;

@@ -12,7 +12,7 @@ declare class GLTFPrimitiveAttribute implements IValidate, ISerializable {
     weights0?: number;
     /** 3rd */
     _batchid?: number;
-    static readFromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute;
+    static fromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute;
     validate(): boolean;
     json(): {
         POSITION: number;

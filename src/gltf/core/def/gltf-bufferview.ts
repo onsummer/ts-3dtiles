@@ -52,7 +52,7 @@ class GLTFBufferView extends GLTFPropertyBase {
     return bv
   }
 
-  static readFromJson(json: IGLTFBufferView) {
+  static fromJson(json: IGLTFBufferView) {
     const bv = new GLTFBufferView()
     bv.buffer = json.buffer
     bv.byteLength = json.byteLength

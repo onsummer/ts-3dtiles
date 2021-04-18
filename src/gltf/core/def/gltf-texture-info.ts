@@ -28,7 +28,7 @@ class GLTFTextureInfo extends GLTFPropertyBase {
     return tinfo
   }
 
-  static readFromJson(json: IGLTFTextureInfo) {
+  static fromJson(json: IGLTFTextureInfo) {
     const textureInfo = new GLTFTextureInfo(json.index, json.texCoord)
     textureInfo.extras = json.extras
 

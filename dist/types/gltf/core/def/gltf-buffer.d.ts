@@ -3,6 +3,7 @@ import GLTFPropertyBase from "./gltf-property-base";
 declare class GLTFBuffer extends GLTFPropertyBase {
     byteLength: number;
     uri?: string;
+    bufferData?: ArrayBuffer;
     constructor();
     /** @deprecated */
     get url(): string | undefined;
@@ -10,6 +11,6 @@ declare class GLTFBuffer extends GLTFPropertyBase {
     json(): {
         byteLength: number;
     };
-    static readFromJson(json: IGLTFBuffer): GLTFBuffer;
+    static fromJson(json: IGLTFBuffer): GLTFBuffer;
 }
 export default GLTFBuffer;

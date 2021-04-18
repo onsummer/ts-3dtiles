@@ -41,7 +41,7 @@ class GLTFCamera extends GLTFPropertyBase {
     return camera
   }
 
-  static readFromJson(json: IGLTFCamera) {
+  static fromJson(json: IGLTFCamera) {
     const camera = new GLTFCamera()
     camera.name = json.name
     if (GLTFCameraTypeValues.includes(json.type)) {

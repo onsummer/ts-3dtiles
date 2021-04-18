@@ -15,7 +15,69 @@ class GLTFPrimitive extends GLTFPropertyBase {
   constructor() {
     super()
   }
-  
+
+  /**
+   * 获取对应顶点属性的访问器
+   * @param {string} attrName 顶点属性名，允许值是：
+   * `'uv0'` | `'uv'`(等同uv0) | `'uv1'` | `'color0'` | `'color'` |
+   * `'normal'` | `'tangent'` | `'joints0'` | `'joints'` | `'weights0'` | 
+   * `'weights'` | `'_batchid'` | `'batchid'`
+   * 
+   * 大写小写均可，例如 `'UV0'` 和 `'uv'`、`'uv0'` 是一样的
+   * @returns {GLTFAccessor | undefined}
+   */
+  getAccessor(attrName: string) {
+    switch (attrName.toLowerCase()) {
+      case 'uv0':
+      case 'uv':
+        if (this.attributes.uv0 !== undefined) {
+          return this.doc?.accessors[this.attributes.uv0]
+        }
+        return undefined
+      case 'uv1':
+        if (this.attributes.uv1 !== undefined) {
+          return this.doc?.accessors[this.attributes.uv1]
+        }
+        return undefined
+      case 'color0':
+      case 'color':
+        if (this.attributes.color0 !== undefined) {
+          return this.doc?.accessors[this.attributes.color0]
+        }
+        return undefined
+      case 'normal':
+        if (this.attributes.normal !== undefined) {
+          return this.doc?.accessors[this.attributes.normal]
+        }
+        return undefined
+      case 'tangent':
+        if (this.attributes.tangent !== undefined) {
+          return this.doc?.accessors[this.attributes.tangent]
+        }
+        return undefined
+      case 'joints0':
+      case 'joints':
+        if (this.attributes.joints0 !== undefined) {
+          return this.doc?.accessors[this.attributes.joints0]
+        }
+        return undefined
+      case 'weights0':
+      case 'weights':
+        if (this.attributes.weights0 !== undefined) {
+          return this.doc?.accessors[this.attributes.weights0]
+        }
+        return undefined
+      case '_batchid':
+      case 'batchid':
+        if (this.attributes._batchid !== undefined) {
+          return this.doc?.accessors[this.attributes._batchid]
+        }
+        return undefined
+      default:
+        return this.doc?.accessors[this.attributes.position]
+    }
+  }
+
   validate() {
     if (this.attributes.validate() === false) {
       return false
@@ -44,7 +106,7 @@ class GLTFPrimitive extends GLTFPropertyBase {
     return prmt
   }
 
-  static readFromJson(json: IGLTFPrimitive) {
+  static fromJson(json: IGLTFPrimitive) {
     const prmt = new GLTFPrimitive()
     prmt.indices = json.indices
     prmt.material = json.material
@@ -55,7 +117,7 @@ class GLTFPrimitive extends GLTFPropertyBase {
         throw new Error(`[GLTFPrimitive.readFromJson()] mode：${json.mode} 不合法，请检查`)
       }
     }
-    prmt.attributes = GLTFPrimitiveAttribute.readFromJson(json.attributes)
+    prmt.attributes = GLTFPrimitiveAttribute.fromJson(json.attributes)
     return prmt
   }
 }

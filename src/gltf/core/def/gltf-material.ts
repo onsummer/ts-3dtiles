@@ -8,6 +8,7 @@ import GLTFNormalTextureInfo from "./gltf-normal-texture-info"
 import GLTFOcclusionTextureInfo from "./gltf-occlusion-texture-info"
 import GLTFPbr from "./gltf-pbr"
 import GLTFTextureInfo from "./gltf-texture-info"
+import { GLTFDocument } from ".."
 
 class GLTFMaterial extends GLTFPropertyBase {
   name?: string
@@ -24,6 +25,22 @@ class GLTFMaterial extends GLTFPropertyBase {
     super()
   }
   
+  set doc(value: GLTFDocument) {
+    this._doc = value
+    if (this.pbrMetallicRoughness !== undefined) {
+      this.pbrMetallicRoughness.doc = value
+    }
+    if (this.normalTexture !== undefined) {
+      this.normalTexture.doc = value
+    }
+    if (this.emissiveTexture !== undefined) {
+      this.emissiveTexture.doc = value
+    }
+    if (this.occlusionTexture !== undefined) {
+      this.occlusionTexture.doc = value
+    }
+  }
+
   validate() {
     if (this.pbrMetallicRoughness?.validate() === false) {
       return false
@@ -64,17 +81,17 @@ class GLTFMaterial extends GLTFPropertyBase {
     return m
   }
 
-  static readFromJson(json: IGLTFMaterial) {
+  static fromJson(json: IGLTFMaterial) {
     const mtl = new GLTFMaterial()
     mtl.name = json.name
     if (json.pbrMetallicRoughness !== undefined) {
-      mtl.pbrMetallicRoughness = GLTFPbr.readFromJson(json.pbrMetallicRoughness)
+      mtl.pbrMetallicRoughness = GLTFPbr.fromJson(json.pbrMetallicRoughness)
     }
     if (json.normalTexture !== undefined) {
-      mtl.normalTexture = GLTFNormalTextureInfo.readFromJson(json.normalTexture)
+      mtl.normalTexture = GLTFNormalTextureInfo.fromJson(json.normalTexture)
     }
     if (json.emissiveTexture !== undefined) {
-      mtl.emissiveTexture = GLTFTextureInfo.readFromJson(json.emissiveTexture)
+      mtl.emissiveTexture = GLTFTextureInfo.fromJson(json.emissiveTexture)
     }
     if (json.alphaMode !== undefined && GLTFAlphaModeValues.includes(json.alphaMode)) {
       mtl.alphaMode = json.alphaMode as GLTFAlphaMode

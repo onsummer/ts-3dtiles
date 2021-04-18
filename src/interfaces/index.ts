@@ -32,5 +32,6 @@ export {
   IGLTFOrthographicCamera,
   IGLTFPerspectiveCamera,
 } from './IGLTFObj'
+export { default as IGLTFWriteAction } from './IGLTFAction'
 
 export * from './tileset'

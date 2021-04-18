@@ -8,6 +8,6 @@ declare class GLTFNormalTextureInfo extends GLTFTextureInfo {
         index: number;
         texCoord: number;
     };
-    static readFromJson(json: IGLTFNormalTextureInfo): GLTFNormalTextureInfo;
+    static fromJson(json: IGLTFNormalTextureInfo): GLTFNormalTextureInfo;
 }
 export default GLTFNormalTextureInfo;

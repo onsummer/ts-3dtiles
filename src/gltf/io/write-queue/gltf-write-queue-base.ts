@@ -1,10 +1,13 @@
+import { GLTFDocument } from "src/gltf/core"
 import IGLTFWriteAction from "../write-action"
 
 class GLTFWriteQueueBase {
-  queue: IGLTFWriteAction[] = []
+  actions: IGLTFWriteAction[] = []
+  doc: GLTFDocument
 
   execute() {
-    this.queue.forEach(action => {
+    this.actions.forEach(action => {
+      action.submit(this.doc)
       console.log(action.type)
     })
   }

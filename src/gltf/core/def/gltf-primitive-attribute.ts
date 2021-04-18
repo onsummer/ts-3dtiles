@@ -16,7 +16,7 @@ class GLTFPrimitiveAttribute implements IValidate, ISerializable {
   /** 3rd */
   _batchid?: number
 
-  static readFromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute {
+  static fromJson(json: IGLTFPrimitiveAttribute): GLTFPrimitiveAttribute {
     const attr = new GLTFPrimitiveAttribute()
     attr.position = json.POSITION
     attr.uv0 = json.TEXCOORD_0

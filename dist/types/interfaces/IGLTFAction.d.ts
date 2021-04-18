@@ -1,8 +1,6 @@
 import { GLTFDocument } from "src/gltf";
-export default interface IGLTFAction {
-    /** methods */
-    emit(): void;
-    /** properties */
-    doc: GLTFDocument;
-    locked: boolean;
+interface IGLTFWriteAction {
+    type: string;
+    submit(doc: GLTFDocument): boolean;
 }
+export default IGLTFWriteAction;

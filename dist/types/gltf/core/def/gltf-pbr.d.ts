@@ -2,7 +2,7 @@ import { IGLTFPbr } from "src/interfaces/IGLTFObj";
 import GLTFPropertyBase from "./gltf-property-base";
 import GLTFTextureInfo from "./gltf-texture-info";
 declare class GLTFPbr extends GLTFPropertyBase {
-    baseColorFactor?: number[];
+    baseColorFactor?: [number, number, number, number];
     baseColorTexture?: GLTFTextureInfo;
     metallicFactor?: number;
     roughnessFactor?: number;
@@ -10,6 +10,6 @@ declare class GLTFPbr extends GLTFPropertyBase {
     constructor();
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFPbr): GLTFPbr;
+    static fromJson(json: IGLTFPbr): GLTFPbr;
 }
 export default GLTFPbr;

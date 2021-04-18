@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@valeera/mathx": "^0.1.13",
+    "base64-arraybuffer": "^0.2.0",
     "gl-matrix": "^3.3.0",
-    "iobuffer": "^5.0.3",
-    "uri-js": "^4.4.1"
+    "iobuffer": "^5.0.3"
   }
 }

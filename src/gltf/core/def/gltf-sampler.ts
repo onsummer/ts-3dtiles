@@ -40,7 +40,7 @@ class GLTFSampler extends GLTFPropertyBase {
     return spl
   }
 
-  static readFromJson(json: IGLTFSampler) {
+  static fromJson(json: IGLTFSampler) {
     const spl = new GLTFSampler()
     spl.name = json.name
     if (json.magFilter !== undefined && GLTFFilterValues.includes(json.magFilter)) {

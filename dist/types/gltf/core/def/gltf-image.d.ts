@@ -7,8 +7,10 @@ declare class GLTFImage extends GLTFPropertyBase {
     mimeType?: MIME;
     name?: string;
     constructor();
+    get isEncodeWithUri(): boolean;
+    get getImageData(): ArrayBuffer | undefined;
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFImage): GLTFImage;
+    static fromJson(json: IGLTFImage): GLTFImage;
 }
 export default GLTFImage;

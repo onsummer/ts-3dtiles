@@ -9,6 +9,6 @@ declare class GLTFTextureInfo extends GLTFPropertyBase {
         index: number;
         texCoord: number;
     };
-    static readFromJson(json: IGLTFTextureInfo): GLTFTextureInfo;
+    static fromJson(json: IGLTFTextureInfo): GLTFTextureInfo;
 }
 export default GLTFTextureInfo;

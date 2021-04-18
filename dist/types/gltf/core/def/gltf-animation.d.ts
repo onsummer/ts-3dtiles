@@ -9,6 +9,6 @@ declare class GLTFAnimation extends GLTFPropertyBase {
     constructor();
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFAnimation): GLTFAnimation;
+    static fromJson(json: IGLTFAnimation): GLTFAnimation;
 }
 export default GLTFAnimation;

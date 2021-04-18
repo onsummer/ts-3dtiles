@@ -24,7 +24,7 @@ class GLTFScene extends GLTFPropertyBase {
     return s
   }
 
-  static readFromJson(json: IGLTFScene) {
+  static fromJson(json: IGLTFScene) {
     const scene = new GLTFScene()
     scene.name = json.name
     scene.nodes = json.nodes

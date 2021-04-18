@@ -29,7 +29,7 @@ class GLTFTexture extends GLTFPropertyBase {
     return tx
   }
 
-  static readFromJson(json: IGLTFTexture) {
+  static fromJson(json: IGLTFTexture) {
     const tx = new GLTFTexture()
     tx.name = json.name
     tx.source = json.source

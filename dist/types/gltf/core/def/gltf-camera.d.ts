@@ -13,6 +13,6 @@ declare class GLTFCamera extends GLTFPropertyBase {
     json(): {
         type: GLTFCameraType;
     };
-    static readFromJson(json: IGLTFCamera): GLTFCamera;
+    static fromJson(json: IGLTFCamera): GLTFCamera;
 }
 export default GLTFCamera;

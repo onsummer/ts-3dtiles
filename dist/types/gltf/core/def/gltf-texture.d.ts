@@ -7,6 +7,6 @@ declare class GLTFTexture extends GLTFPropertyBase {
     constructor();
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFTexture): GLTFTexture;
+    static fromJson(json: IGLTFTexture): GLTFTexture;
 }
 export default GLTFTexture;

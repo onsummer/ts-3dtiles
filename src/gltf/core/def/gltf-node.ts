@@ -41,6 +41,19 @@ class GLTFNode extends GLTFPropertyBase {
     super()
   }
 
+  getMesh() {
+    if (this.doc === undefined) {
+      return null
+    }
+    if (this.mesh === undefined) {
+      return null
+    } else if (this.doc.meshes.length < this.mesh) {
+      return null
+    }
+    
+    return this.doc.meshes[this.mesh]
+  }
+
   validate() {
     if (!validateTransforms(this)) {
       return false
@@ -87,7 +100,7 @@ class GLTFNode extends GLTFPropertyBase {
     return n
   }
 
-  static readFromJson(json: IGLTFNode) {
+  static fromJson(json: IGLTFNode) {
     const node = new GLTFNode()
     node.name = json.name
     node.mesh = json.mesh

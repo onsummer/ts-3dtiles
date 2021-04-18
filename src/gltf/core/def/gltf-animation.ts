@@ -37,7 +37,7 @@ class GLTFAnimation extends GLTFPropertyBase {
     return ani
   }
 
-  static readFromJson(json: IGLTFAnimation) {
+  static fromJson(json: IGLTFAnimation) {
     const ani = new GLTFAnimation()
     ani.name = json.name
     ani.channels = json.channels.map(channel => GLTFAnimationChannel.readFromJson(channel))

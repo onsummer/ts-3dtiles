@@ -11,6 +11,6 @@ declare class GLTFSampler extends GLTFPropertyBase {
     constructor();
     validate(): boolean;
     json(): {};
-    static readFromJson(json: IGLTFSampler): GLTFSampler;
+    static fromJson(json: IGLTFSampler): GLTFSampler;
 }
 export default GLTFSampler;

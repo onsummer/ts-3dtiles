@@ -60,7 +60,7 @@ class GLTFAccessor extends GLTFPropertyBase {
     return acc
   }
 
-  static readFromJson(json: IGLTFAccessor) {
+  static fromJson(json: IGLTFAccessor) {
     const acc = new GLTFAccessor()
     if (GLTFComponentTypeValues.includes(json.componentType)) {
       acc.componentType = json.componentType as GLTFComponentType
