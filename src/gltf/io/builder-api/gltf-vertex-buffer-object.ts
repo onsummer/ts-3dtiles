@@ -1,15 +1,25 @@
-import { GLTFAttributeType } from "src/gltf/core"
+import {
+  GLTFAttributeType,
+  GLTFComponentType,
+  GLTFPrimitive,
+} from "src/gltf/core";
 
 class GLTFVertexBufferObject {
-  name: string
-  data: Float32Array
-  elementType: GLTFAttributeType
+  name: string;
+  data: ArrayBuffer;
+  elementType: GLTFAttributeType;
+  valueType: GLTFComponentType;
 
-  constructor(options: { name: string; data: Float32Array; elementType: GLTFAttributeType }) {
-    this.name = options.name
-    this.data = options.data
-    this.elementType = options.elementType
+  constructor(options: {
+    name: string;
+    data: ArrayBuffer;
+    elementType: GLTFAttributeType;
+    valueType: GLTFComponentType;
+  }) {
+    this.name = options.name;
+    this.data = options.data;
+    this.elementType = options.elementType;
   }
 }
 
-export default GLTFVertexBufferObject
+export default GLTFVertexBufferObject;
