@@ -39,7 +39,7 @@
 输出全局对象 `ts3dtiles` 即可使用。
 
 ``` 
-> ts3dtils
+> ts3dtiles
 
 > {Asset: ƒ, B3dm: ƒ, B3dmHeader: ƒ, BatchTable: ƒ, Cmpt: ƒ, …}
   Asset: class
@@ -63,12 +63,14 @@
 # 3 文档
 
 // TODO ：jsDoc配置
+
 // TODO ：代码注释
 
 # 4 TODO
 
-- `gltf` gltf 的创建功能
-  - 支持 gltf 创建功能的插件机制，允许外部编写程序进行转换
+- `gltf` gltf 的创建功能 API 设计如下：
+  - `Builder API`: 接近 glTF 的属性表达的一种 API，目前已不稳定测试中（2021年5月24日）
+  - `Action API`: 一种模块式的增删改查 API，与 `Builder API` 不同的是，`Builder API` 比较合适创建简单的 glTF 模型，而 `Action API` 适合增删改模型
 - `tileset` 读取层级 BatchTable 的能力
 - `gltf` 支持 draco 读取，使用 wasm 库
 - `tileset` 接入 3dtiles-next 扩展特性
