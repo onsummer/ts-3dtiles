@@ -1,17 +1,18 @@
 {
   "author": "onsummer",
   "repository": "onsummer/ts-3dtiles",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "GPL-3.0-or-later",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/esmodule/ts-3dtiles.esm.js",
   "typings": "./dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.ts",
-    "build-dev": "rollup -c rollup.config.ts --environment NODE_ENV:dev",
+    "build-unminifined": "rollup -c rollup.config.ts --environment build:unminifined",
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
