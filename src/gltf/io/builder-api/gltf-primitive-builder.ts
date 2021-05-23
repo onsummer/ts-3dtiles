@@ -1,6 +1,7 @@
 import {
   GLTFAccessor,
   GLTFAttributeType,
+  GLTFBuffer,
   GLTFBufferView,
   GLTFComponentType,
   GLTFDocument,
@@ -8,13 +9,16 @@ import {
   GLTFMesh,
   GLTFNode,
   GLTFPrimitive,
+  GLTFScene,
 } from "src/gltf/core";
 import { getAttributeTypeElementCount } from "src/gltf/core/def/enum/gltf-attribute-type";
 import { getComponentTypeByteSize } from "src/gltf/core/def/enum/gltf-component-type";
+import { strideArrayMinMax } from "src/utils/array-minmax";
 import GLTFVertexBufferObject from "./gltf-vertex-buffer-object";
 
 function contact(b1: ArrayBuffer, b2: ArrayBuffer) {
-  if (Buffer) {
+  if (globalThis.constructor.name === "Object") {
+    // nodejs
     const mergedBuffer = Buffer.concat([
       new Uint8Array(b1),
       new Uint8Array(b2),
@@ -24,8 +28,7 @@ function contact(b1: ArrayBuffer, b2: ArrayBuffer) {
     const totalLength = b1.byteLength + b2.byteLength;
     const mergedBuffer = new Uint8Array(totalLength);
     mergedBuffer.set(new Uint8Array(b1), 0);
-    const offset = mergedBuffer.byteLength;
-    mergedBuffer.set(new Uint8Array(b2), offset);
+    mergedBuffer.set(new Uint8Array(b2), b1.byteLength);
     return mergedBuffer.buffer;
   }
 }
@@ -87,12 +90,12 @@ class GLTFPrimitiveBuilder {
   // 规定 position、uv0、normal 必须是 f32
 
   setPosition(data: Float32Array) {
-    if (data.length !== this.count) {
+    if (data.length / 3 !== this.count) {
       return false;
     }
 
     const positionVBO = new GLTFVertexBufferObject({
-      name: "uv0",
+      name: "position",
       data: data.buffer,
       elementType: GLTFAttributeType.VEC3,
       valueType: GLTFComponentType.FLOAT,
@@ -102,7 +105,7 @@ class GLTFPrimitiveBuilder {
   }
 
   setUV0(data: Float32Array) {
-    if (data.length !== this.count) {
+    if (data.length / 2 !== this.count) {
       return false;
     }
 
@@ -117,7 +120,7 @@ class GLTFPrimitiveBuilder {
   }
 
   setNormal(data: Float32Array) {
-    if (data.length !== this.count) {
+    if (data.length / 3 !== this.count) {
       return false;
     }
 
@@ -129,6 +132,10 @@ class GLTFPrimitiveBuilder {
     });
     this.vao.push(normalVBO);
     return true;
+  }
+
+  setIndices(data: Uint8Array | Uint16Array | Uint32Array) {
+    console.log(data);
   }
 
   setOther(
@@ -157,7 +164,7 @@ class GLTFPrimitiveBuilder {
   submit(doc: GLTFDocument) {
     let meshDef: GLTFMesh;
     let nodeDef: GLTFNode | undefined;
-
+    let nodeIndex: number = -1;
     const prmt = GLTFPrimitive.fromJson({
       attributes: {
         POSITION: -1,
@@ -175,8 +182,9 @@ class GLTFPrimitiveBuilder {
       nodeDef = GLTFNode.fromJson({
         children: [],
         mesh: doc.meshes.length - 1,
+        matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
       });
-      doc.nodes.push(nodeDef);
+      nodeIndex = doc.nodes.push(nodeDef) - 1;
     } else {
       meshDef = this._mesh;
       // 步骤1 计算 mesh 的索引号
@@ -192,47 +200,65 @@ class GLTFPrimitiveBuilder {
         meshIdx = doc.meshes.push(meshDef) - 1;
       }
       // 步骤2 遍历所有 node，查找对应的 node，若无，创建新的 node
-      doc.nodes.forEach((node) => {
+      doc.nodes.forEach((node, index) => {
         if (node.mesh !== undefined && node.mesh === meshIdx) {
           nodeDef = node;
+          nodeIndex = index;
         }
       });
       if (nodeDef === undefined) {
         nodeDef = GLTFNode.fromJson({
           children: [],
           mesh: meshIdx,
+          matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
         });
-        doc.nodes.push(nodeDef);
+        nodeIndex = doc.nodes.push(nodeDef) - 1;
       }
     }
 
     meshDef.primitives.push(prmt);
+    const scene = GLTFScene.fromJson({
+      nodes: [nodeIndex],
+    });
+    doc.scenes.push(scene);
 
     // 创建 accessor 和 bufferView，同时推入 data 到 buffer[0]
-    this.vao.forEach((vbo) => {
+    this.vao.forEach((vbo, index, originArr) => {
       const bufferView = GLTFBufferView.fromJson({
         buffer: 0,
         byteLength: vbo.data.byteLength,
+        byteOffset: index === 0 ? 0 : originArr[index - 1].data.byteLength,
       });
       const bvIdx = doc.bufferViews.push(bufferView) - 1;
+      const valueType = getComponentTypeByteSize(vbo.valueType);
+      const elementType = getAttributeTypeElementCount(vbo.elementType);
+
+      const dataTypedArray = vbo.getTypedArray();
       const accessor = GLTFAccessor.fromJson({
         componentType: vbo.valueType,
-        count:
-          vbo.data.byteLength /
-          (getComponentTypeByteSize(vbo.valueType) *
-            getAttributeTypeElementCount(vbo.elementType)),
+        count: vbo.data.byteLength / (valueType * elementType),
         type: vbo.elementType,
         bufferView: bvIdx,
+        byteOffset: 0,
+        max: strideArrayMinMax(dataTypedArray, elementType, true),
+        min: strideArrayMinMax(dataTypedArray, elementType, false),
       });
       const accIdx = doc.accessors.push(accessor) - 1;
       setAttribute(prmt, vbo.name, accIdx);
 
-      const bufferZero = doc.buffers[0];
+      let bufferZero = doc.buffers[0];
+      if (bufferZero === undefined) {
+        bufferZero = GLTFBuffer.fromJson({
+          byteLength: 0,
+        });
+        doc.buffers.push(bufferZero);
+      }
       let bufferZeroData =
         bufferZero.bufferData === undefined
           ? new ArrayBuffer(0)
           : bufferZero.bufferData;
       bufferZero.bufferData = contact(bufferZeroData, vbo.data);
+      bufferZero.byteLength += vbo.data.byteLength;
     });
 
     /* material 阶段 todo */

@@ -8,6 +8,7 @@
   "typings": "./dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.ts",
+    "build-dev": "rollup -c rollup.config.ts --environment NODE_ENV:dev",
     "prepare": "husky install"
   },
   "devDependencies": {
